@@ -1,0 +1,9822 @@
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<style type="text/css"> body {padding: 10px 30px 10px 30px;} table,th, td {text-align: center;}</style>
+<style>
+td.tableRow
+{
+text-align:center;
+}
+</style>
+
+
+Customer Segmentation in the Boating Industry
+========================================================
+
+**J. Niessing, INSEAD**
+
+**T. Evgeniou, INSEAD**
+
+
+The Business Issue
+---------------------------------------------------------
+
+A boating company had become a victim of the crisis in the boating industry. The business problem of the "Boat" case study, although hypothetical, depicts very well the sort of business problems faced by many real companies in an increasingly data-intensive business environment. The management team was now exploring various growth options. Expanding further in some markets, in particular North America, was no longer something to consider for the distant future. It was becoming an immediate necessity. 
+
+The team believed that in order to develop a strategy for North America, they needed a better understanding of their current and potential customers in that market. They believed that they had to build more targeted boats for their most important segments there. To that purpose, the boating company had been commissioned a segmentation project for that market. Being a data-friendly company, the decision was made to develop a segmentation in a data-driven way - none of that soft hold-hands-and-discuss stuff. 
+
+
+The Data
+--------------------------------------------
+
+With the aid of a market research firm, the boating company gathered various data about the boating market in the US through interviews with almost 3,000 boat owners and intenders. The data consisted, among others, 29 attitudes towards boating, which respondents indicated on a 5-point scale (Q. 1, 1-29 shown in the survey in the appendix).
+
+Other types of information had been collected, such as demographics (Q. 11-15 in the survey). Finally, the boating company had compiled information about the boats, such as the length of the boat they owned, how they used their boats, and the price of the boats (Q. 2-10 in the survey). A segmentation and profile of the market would be done using all this data. 
+
+The Approach
+--------------------------------------------
+
+Based on past experience, the decision was made to develop a segmentation that was mostly driven by attitudes that consumer held regarding boating - the attitudinal data from the 29 questions in Q.1.
+
+### Factor Analysis
+
+As a first step, the company decided to simplify the data by grouping the 29 attitudinal statements in Q1 into a few meaningful sets/factors. This could be done using a standard method: factor analysis. The objective is to summarize information (the variation) in correlated raw attributes to a smaller number of manageable factors - which are typically uncorrelated or independent. In the process one decreases the number of raw attributes while keeping most of the information in the data in a statistical sense. This data reduction technique is a very useful step in helping interpreting the data and make better decisions. It also helps to identify the key variables that should be used in the segmentation procedure. 
+
+We first have to read the whole dataset, which is in CSV format.
+
+For the Factor Analysis, we will only use the 29 items of the data that describe the attitudes towards boating of people in the sample. Such 29 items are measured on a Likert scale of 1-5. All the 29 items are integer variables that take values between 1 (=strongly disagree) and 5 (=strongly agree).
+
+Every factor analysis has three basic decision points:  
+
+- Decide the number of factors, 
+
+- Choose an extraction method, 
+
+- Choose a rotation method.  
+
+
+Sometimes it makes sense to run a quick correlation matrix before the factor analysis. It usually gives a first glance at the inter-relationships between variables and it is often an input for factor analysis (i.e. eigenvalue decomposition of the correlation matrix). In this example the correlaton matrix for the 29 attitudes looks like this: 
+
+<style>
+.wrapper{
+
+
+width: 100%;
+
+overflow-x: scroll;
+
+}
+.wrapper1{
+
+height:400px;
+overflow-y: scroll;
+}
+th.wrapper{
+display:block;
+}
+
+</style>
+
+
+
+
+<div class="wrapper wrapper1 th.display">
+
+<table border="1" class="data table table-bordered table-condensed">
+  <thead class="thead" style="font-size:10px;">
+    <tr>
+      <th style="position:fixed;"></th>
+      <th>Class code</th>
+      <th>January</th>
+      <th>February</th>
+      <th>March</th>
+      <th>April</th>
+      <th>May</th>
+      <th>June</th>
+      <th>July</th>
+      <th>August</th>
+      <th>September</th>
+      <th>October</th>
+      <th>November</th>
+      <th>December</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center" style="font-size:10px;">Class code</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.0252644</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.03993403</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.04262432</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.0410317</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.02602916</td>
+      <td align="right" style="background-color: rgb(248,255,248)">0.02930517</td>
+      <td align="right" style="background-color: rgb(255,252,252)">-0.0148439</td>
+      <td align="right" style="background-color: rgb(251,255,251)">0.01583867</td>
+      <td align="right" style="background-color: rgb(252,255,252)">0.0143583</td>
+      <td align="right" style="background-color: rgb(255,255,255)">-0.001523761</td>
+      <td align="right" style="background-color: rgb(255,255,255)">0.001047293</td>
+      <td align="right" style="background-color: rgb(253,255,253)">0.009988943</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">January</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.0252644</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4869174</td>
+      <td align="right" style="background-color: rgb(138,255,138)">0.460281</td>
+      <td align="right" style="background-color: rgb(155,255,155)">0.3937697</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3783158</td>
+      <td align="right" style="background-color: rgb(171,255,171)">0.3287194</td>
+      <td align="right" style="background-color: rgb(179,255,179)">0.3000461</td>
+      <td align="right" style="background-color: rgb(173,255,173)">0.3234261</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.3105517</td>
+      <td align="right" style="background-color: rgb(170,255,170)">0.334724</td>
+      <td align="right" style="background-color: rgb(180,255,180)">0.2945598</td>
+      <td align="right" style="background-color: rgb(175,255,175)">0.3141265</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">February</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.03993403</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4869174</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(109,255,109)">0.5738064</td>
+      <td align="right" style="background-color: rgb(137,255,137)">0.4648214</td>
+      <td align="right" style="background-color: rgb(156,255,156)">0.3897439</td>
+      <td align="right" style="background-color: rgb(145,255,145)">0.4301341</td>
+      <td align="right" style="background-color: rgb(160,255,160)">0.373603</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3652487</td>
+      <td align="right" style="background-color: rgb(152,255,152)">0.4023841</td>
+      <td align="right" style="background-color: rgb(169,255,169)">0.3369853</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3645192</td>
+      <td align="right" style="background-color: rgb(178,255,178)">0.3012173</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">March</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.04262432</td>
+      <td align="right" style="background-color: rgb(138,255,138)">0.460281</td>
+      <td align="right" style="background-color: rgb(109,255,109)">0.5738064</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(103,255,103)">0.5943504</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4846684</td>
+      <td align="right" style="background-color: rgb(144,255,144)">0.437397</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3512398</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3480329</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3781614</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3654792</td>
+      <td align="right" style="background-color: rgb(173,255,173)">0.320768</td>
+      <td align="right" style="background-color: rgb(181,255,181)">0.291441</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">April</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.0410317</td>
+      <td align="right" style="background-color: rgb(155,255,155)">0.3937697</td>
+      <td align="right" style="background-color: rgb(137,255,137)">0.4648214</td>
+      <td align="right" style="background-color: rgb(103,255,103)">0.5943504</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(125,255,125)">0.5101888</td>
+      <td align="right" style="background-color: rgb(144,255,144)">0.4371569</td>
+      <td align="right" style="background-color: rgb(160,255,160)">0.3747499</td>
+      <td align="right" style="background-color: rgb(163,255,163)">0.3601312</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.4190759</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3654554</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3514112</td>
+      <td align="right" style="background-color: rgb(186,255,186)">0.2705581</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">May</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.02602916</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3783158</td>
+      <td align="right" style="background-color: rgb(156,255,156)">0.3897439</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4846684</td>
+      <td align="right" style="background-color: rgb(125,255,125)">0.5101888</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(118,255,118)">0.5352011</td>
+      <td align="right" style="background-color: rgb(138,255,138)">0.4598296</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.4191832</td>
+      <td align="right" style="background-color: rgb(153,255,153)">0.4011714</td>
+      <td align="right" style="background-color: rgb(149,255,149)">0.4167256</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.318076</td>
+      <td align="right" style="background-color: rgb(179,255,179)">0.2978512</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">June</td>
+      <td align="right" style="background-color: rgb(248,255,248)">0.02930517</td>
+      <td align="right" style="background-color: rgb(171,255,171)">0.3287194</td>
+      <td align="right" style="background-color: rgb(145,255,145)">0.4301341</td>
+      <td align="right" style="background-color: rgb(144,255,144)">0.437397</td>
+      <td align="right" style="background-color: rgb(144,255,144)">0.4371569</td>
+      <td align="right" style="background-color: rgb(118,255,118)">0.5352011</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(121,255,121)">0.5262304</td>
+      <td align="right" style="background-color: rgb(142,255,142)">0.4434944</td>
+      <td align="right" style="background-color: rgb(133,255,133)">0.4768286</td>
+      <td align="right" style="background-color: rgb(150,255,150)">0.4122745</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3758387</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.3178597</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">July</td>
+      <td align="right" style="background-color: rgb(255,252,252)">-0.0148439</td>
+      <td align="right" style="background-color: rgb(179,255,179)">0.3000461</td>
+      <td align="right" style="background-color: rgb(160,255,160)">0.373603</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3512398</td>
+      <td align="right" style="background-color: rgb(160,255,160)">0.3747499</td>
+      <td align="right" style="background-color: rgb(138,255,138)">0.4598296</td>
+      <td align="right" style="background-color: rgb(121,255,121)">0.5262304</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(123,255,123)">0.5178766</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4875127</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.4390247</td>
+      <td align="right" style="background-color: rgb(154,255,154)">0.3953433</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.319967</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">August</td>
+      <td align="right" style="background-color: rgb(251,255,251)">0.01583867</td>
+      <td align="right" style="background-color: rgb(173,255,173)">0.3234261</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3652487</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3480329</td>
+      <td align="right" style="background-color: rgb(163,255,163)">0.3601312</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.4191832</td>
+      <td align="right" style="background-color: rgb(142,255,142)">0.4434944</td>
+      <td align="right" style="background-color: rgb(123,255,123)">0.5178766</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(107,255,107)">0.5818875</td>
+      <td align="right" style="background-color: rgb(119,255,119)">0.5350007</td>
+      <td align="right" style="background-color: rgb(142,255,142)">0.4438702</td>
+      <td align="right" style="background-color: rgb(153,255,153)">0.4008102</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">September</td>
+      <td align="right" style="background-color: rgb(252,255,252)">0.0143583</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.3105517</td>
+      <td align="right" style="background-color: rgb(152,255,152)">0.4023841</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3781614</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.4190759</td>
+      <td align="right" style="background-color: rgb(153,255,153)">0.4011714</td>
+      <td align="right" style="background-color: rgb(133,255,133)">0.4768286</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4875127</td>
+      <td align="right" style="background-color: rgb(107,255,107)">0.5818875</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(118,255,118)">0.5385675</td>
+      <td align="right" style="background-color: rgb(124,255,124)">0.51261</td>
+      <td align="right" style="background-color: rgb(150,255,150)">0.413333</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">October</td>
+      <td align="right" style="background-color: rgb(255,255,255)">-0.001523761</td>
+      <td align="right" style="background-color: rgb(170,255,170)">0.334724</td>
+      <td align="right" style="background-color: rgb(169,255,169)">0.3369853</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3654792</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3654554</td>
+      <td align="right" style="background-color: rgb(149,255,149)">0.4167256</td>
+      <td align="right" style="background-color: rgb(150,255,150)">0.4122745</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.4390247</td>
+      <td align="right" style="background-color: rgb(119,255,119)">0.5350007</td>
+      <td align="right" style="background-color: rgb(118,255,118)">0.5385675</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(133,255,133)">0.4803065</td>
+      <td align="right" style="background-color: rgb(135,255,135)">0.4691081</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">November</td>
+      <td align="right" style="background-color: rgb(255,255,255)">0.001047293</td>
+      <td align="right" style="background-color: rgb(180,255,180)">0.2945598</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3645192</td>
+      <td align="right" style="background-color: rgb(173,255,173)">0.320768</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3514112</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.318076</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3758387</td>
+      <td align="right" style="background-color: rgb(154,255,154)">0.3953433</td>
+      <td align="right" style="background-color: rgb(142,255,142)">0.4438702</td>
+      <td align="right" style="background-color: rgb(124,255,124)">0.51261</td>
+      <td align="right" style="background-color: rgb(133,255,133)">0.4803065</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(132,255,132)">0.4834691</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">December</td>
+      <td align="right" style="background-color: rgb(253,255,253)">0.009988943</td>
+      <td align="right" style="background-color: rgb(175,255,175)">0.3141265</td>
+      <td align="right" style="background-color: rgb(178,255,178)">0.3012173</td>
+      <td align="right" style="background-color: rgb(181,255,181)">0.291441</td>
+      <td align="right" style="background-color: rgb(186,255,186)">0.2705581</td>
+      <td align="right" style="background-color: rgb(179,255,179)">0.2978512</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.3178597</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.319967</td>
+      <td align="right" style="background-color: rgb(153,255,153)">0.4008102</td>
+      <td align="right" style="background-color: rgb(150,255,150)">0.413333</td>
+      <td align="right" style="background-color: rgb(135,255,135)">0.4691081</td>
+      <td align="right" style="background-color: rgb(132,255,132)">0.4834691</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+</div>
+### Number of Factors
+
+There are three common ways to select the optimal number of factors from a statistical perspective:
+
+1. All factors with eigenvalue larger than 1
+
+2. Based on the cumulative variance we would like to explain (e.g. at least 50% for example)
+
+3. Pick the number of factors corresponding to the "elbow" of the scree plot
+
+The first two approaches to select the number of factors/derived variables can be seen in the following table: 
+
+
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Mon Feb 16 21:58:39 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID8b616e0dd89a () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "Component No:1",
+5.521254038,
+42.47118491,
+42.47118491 
+],
+[
+ "Component No:2",
+1.23214429,
+9.478033,
+51.94921791 
+],
+[
+ "Component No:3",
+0.9912254823,
+7.624811403,
+59.57402931 
+],
+[
+ "Component No:4",
+0.874822715,
+6.7294055,
+66.30343481 
+],
+[
+ "Component No:5",
+0.6346603907,
+4.882003006,
+71.18543782 
+],
+[
+ "Component No:6",
+0.6132503327,
+4.717310252,
+75.90274807 
+],
+[
+ "Component No:7",
+0.574309602,
+4.417766169,
+80.32051424 
+],
+[
+ "Component No:8",
+0.4886100735,
+3.758539027,
+84.07905326 
+],
+[
+ "Component No:9",
+0.4646519465,
+3.574245743,
+87.65329901 
+],
+[
+ "Component No:10",
+0.4444580003,
+3.418907694,
+91.0722067 
+],
+[
+ "Component No:11",
+0.4210034157,
+3.238487813,
+94.31069451 
+],
+[
+ "Component No:12",
+0.3825359931,
+2.942584562,
+97.25327908 
+],
+[
+ "Component No:13",
+0.3570737202,
+2.746720925,
+100 
+] 
+];
+data.addColumn('string','Components');
+data.addColumn('number','Eigenvalue');
+data.addColumn('number','Percentage_of_explained_variance');
+data.addColumn('number','Cumulative_percentage_of_explained_variance');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID8b616e0dd89a() {
+var data = gvisDataTableID8b616e0dd89a();
+var options = {};
+options["allowHtml"] = true;
+options["width"] =   1200;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+  var dataFormat1 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat1.format(data, 1);
+  var dataFormat2 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat2.format(data, 2);
+  var dataFormat3 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat3.format(data, 3);
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID8b616e0dd89a')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID8b616e0dd89a);
+})();
+function displayChartTableID8b616e0dd89a() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID8b616e0dd89a"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID8b616e0dd89a" 
+  style="width: 1200; height: 400;">
+</div>
+
+
+
+<br>
+<br>
+In this data 2  factors have an eigenvalue > 1. But the team didn't wanted to select the number based on statistical criteria only. They looked at different factor solutions (varying from 4 to 14 factors in total) and realized that they would loose too much information if they would only go with 5 factors. Looking also at the explained variance and based on business sense the team decided to use 10 factors. As shown in the table above these 10 factors explain  91.07 % of the variance. If they would stick to the 5 factors with an eigenvalue over 1 they would only explain a little bit more than 50% of the variance. 
+
+A common basic visualization when running the factor analysis is the Screeplot, which depicts the eigenvalues of the factors and thus allows gaining a quick overview on how many factors should be retained:
+
+<center>
+<!-- LineChart generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Mon Feb 16 21:58:39 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataLineChartID8b61826167 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+5.521254038,
+1 
+],
+[
+ "2",
+1.23214429,
+1 
+],
+[
+ "3",
+0.9912254823,
+1 
+],
+[
+ "4",
+0.874822715,
+1 
+],
+[
+ "5",
+0.6346603907,
+1 
+],
+[
+ "6",
+0.6132503327,
+1 
+],
+[
+ "7",
+0.574309602,
+1 
+],
+[
+ "8",
+0.4886100735,
+1 
+],
+[
+ "9",
+0.4646519465,
+1 
+],
+[
+ "10",
+0.4444580003,
+1 
+],
+[
+ "11",
+0.4210034157,
+1 
+],
+[
+ "12",
+0.3825359931,
+1 
+],
+[
+ "13",
+0.3570737202,
+1 
+] 
+];
+data.addColumn('string','components');
+data.addColumn('number','eigenvalues');
+data.addColumn('number','abline');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartLineChartID8b61826167() {
+var data = gvisDataLineChartID8b61826167();
+var options = {};
+options["allowHtml"] = true;
+options["title"] = "Scree plot";
+options["legend"] = "right";
+options["width"] =    900;
+options["height"] =    600;
+options["hAxis"] = {title:'Number of Components', titleTextStyle:{color:'black'}};
+options["vAxes"] = [{title:'Eigenvalues'}];
+options["series"] = [{color:'green',pointSize:12, targetAxisIndex: 0}];
+
+    var chart = new google.visualization.LineChart(
+    document.getElementById('LineChartID8b61826167')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartLineChartID8b61826167);
+})();
+function displayChartLineChartID8b61826167() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID8b61826167"></script>
+ 
+<!-- divChart -->
+  
+<div id="LineChartID8b61826167" 
+  style="width: 900; height: 600;">
+</div>
+</center>
+
+Based on this screeplot you could say that the selected number of factors should be between 3 and 6 factors but as mentioned above the team decided to use 10 factors based on the explained variance because the explained variance was the key selection criterion in this case. 
+
+### Extraction Method
+
+The extraction method will produce factor loadings for every item on every extracted factor. Researchers hope their results will show what is called simple structure, with most items having a large loading on one factor but small loadings on other factors.
+
+There at least five extraction methods. The evidence supports the use of one of these two:
+
+- principal axis factoring
+- maximum likelihood approaches (i.e. canonical factoring)
+
+The extraction and rotation steps are usually specificed in the same command in R (next subsection shows such commands).
+
+### Rotation Method
+
+Once an initial solution is obtained, the loadings are rotated. Rotation is a way of maximizing high loadings and minimizing low loadings so that the simplest possible structure is achieved.
+
+There are two commen types:
+
+- no rotation
+
+- varimax, which is one of the key rotation methods used
+
+We use the fa() function from the library Phsych because it allows us to specify different factoring methods (e.g. PAF, ML) and also different types of rotation (e.g. varimax, Oblimin and others). In such a function we have to specify r (the corelation matrix: corMat), nfactors (number of factors), rotate (type of rotation or transformations of the solution: oblimin), and fm (factoring method: principal axis).
+
+Below are the tables of factor loadings and other statistics for the principal axis factoring and two rotation scenarios. Only the factors selected based on variance are shown. The first table is showing the unrotated 10-factor solution while the second table is showing the results from the variamx rotation: 
+
+
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Mon Feb 16 21:58:40 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID8b6160fa2e5a () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "Class code",
+null,
+null,
+0.97,
+null,
+null 
+],
+[
+ "January",
+0.59,
+null,
+null,
+null,
+0.46 
+],
+[
+ "February",
+0.67,
+null,
+null,
+null,
+null 
+],
+[
+ "March",
+0.69,
+0.46,
+null,
+null,
+null 
+],
+[
+ "April",
+0.68,
+null,
+null,
+null,
+null 
+],
+[
+ "May",
+0.69,
+null,
+null,
+null,
+null 
+],
+[
+ "June",
+0.71,
+null,
+null,
+null,
+null 
+],
+[
+ "July",
+0.69,
+null,
+null,
+null,
+null 
+],
+[
+ "August",
+0.71,
+null,
+null,
+null,
+null 
+],
+[
+ "September",
+0.74,
+null,
+null,
+null,
+null 
+],
+[
+ "October",
+0.7,
+null,
+null,
+null,
+null 
+],
+[
+ "November",
+0.65,
+null,
+null,
+null,
+null 
+],
+[
+ "December",
+0.59,
+null,
+null,
+0.43,
+null 
+] 
+];
+data.addColumn('string','Attitudes');
+data.addColumn('number','Component 1');
+data.addColumn('number','Component 2');
+data.addColumn('number','Component 3');
+data.addColumn('number','Component 4');
+data.addColumn('number','Component 5');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID8b6160fa2e5a() {
+var data = gvisDataTableID8b6160fa2e5a();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID8b6160fa2e5a')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID8b6160fa2e5a);
+})();
+function displayChartTableID8b6160fa2e5a() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID8b6160fa2e5a"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID8b6160fa2e5a" 
+  style="width: 1220; height: 400;">
+</div>
+
+<p> </p>
+
+<!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Mon Feb 16 21:58:40 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableID8b6166039b72 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "July",
+0.79,
+null,
+null,
+null,
+null 
+],
+[
+ "August",
+0.66,
+0.43,
+null,
+null,
+null 
+],
+[
+ "June",
+0.66,
+null,
+0.42,
+null,
+null 
+],
+[
+ "September",
+0.54,
+0.53,
+null,
+null,
+null 
+],
+[
+ "May",
+0.5,
+null,
+0.6,
+null,
+null 
+],
+[
+ "October",
+0.43,
+0.62,
+null,
+null,
+null 
+],
+[
+ "February",
+null,
+null,
+0.41,
+0.64,
+null 
+],
+[
+ "November",
+null,
+0.75,
+null,
+null,
+null 
+],
+[
+ "April",
+null,
+null,
+0.81,
+null,
+null 
+],
+[
+ "January",
+null,
+null,
+null,
+0.86,
+null 
+],
+[
+ "March",
+null,
+null,
+0.72,
+0.41,
+null 
+],
+[
+ "December",
+null,
+0.8,
+null,
+null,
+null 
+],
+[
+ "Class code",
+null,
+null,
+null,
+null,
+1 
+] 
+];
+data.addColumn('string','Attitudes');
+data.addColumn('number','Component 1');
+data.addColumn('number','Component 2');
+data.addColumn('number','Component 3');
+data.addColumn('number','Component 4');
+data.addColumn('number','Component 5');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableID8b6166039b72() {
+var data = gvisDataTableID8b6166039b72();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =   1220;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableID8b6166039b72')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableID8b6166039b72);
+})();
+function displayChartTableID8b6166039b72() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableID8b6166039b72"></script>
+ 
+<!-- divChart -->
+  
+<div id="TableID8b6166039b72" 
+  style="width: 1220; height: 400;">
+</div>
+<br>
+<br>
+From the factor analysis above, we can identify the attitudinal questions that clearly load into a single derived factor (i.e. a construct). Based on this, we can have an idea of the underlying construct (not observed in the data) that determines the attitudes of different customers. For instance, Q1_27, Q1_28 and Q1_20 load strongly into the same factor (besides other attitudes). Looking at the description of these questions, we can have an idea of the construct that determines the customer responses to these attitude questions. The questions have the following statements:
+
+Q1_27: "Boating is the number one thing I do with my spare time"
+
+Q1_28: "Boating is my true passion in life"
+
+Q1_20: "When not on my boat, I often find myself doing boating related activities"
+
+Based on the descriptions of the attitudes that are loading into the first factor, we could say that the first factor measures a construct of "Passion and expertise around boating". We do not observe the extent to which passion is important for the respondents (the questionnaire does not ask a direct question about something called "personal image"); however, the actual attitudes allow deriving such construct.
+
+Based on the factor analsyis described above we can obtain 10 factor scores for each of almost 3000 customers. These 10 new derived variables can be used instead of the whole 29 attitudinal variables for further analysis. Once we decided the factors to use (like in this example now 10), we typically replace the original data with a new dataset where each observation (row) is now described not using the original raw attributes but using instead the selected factors/derived attributes. 
+
+The factor scores are useful because they allow comparing customers based on few attitude dimensions (in this case 10 of them). For creating market segments, we could use these 5 derived variables (constructs) instead of the 29 raw attitudinal variables. For example the factor scores for the first 5 people are:
+
+<table class='table table-striped table-hover table-bordered'>
+<caption align="top"> Sample Data described using the selected Factors: Boating Company </caption>
+<tr> <th>  </th> <th> Derived Variable (Factor) 1 </th> <th> Derived Variable (Factor) 2 </th> <th> Derived Variable (Factor) 3 </th> <th> Derived Variable (Factor) 4 </th> <th> Derived Variable (Factor) 5 </th>  </tr>
+  <tr> <td align="right"> 1 </td> <td align="right"> -0.8 </td> <td align="right"> -0.8 </td> <td align="right"> -0.1 </td> <td align="right"> -0.8 </td> <td align="right"> -1.5 </td> </tr>
+  <tr> <td align="right"> 2 </td> <td align="right"> -1.4 </td> <td align="right"> -0.7 </td> <td align="right"> 0.2 </td> <td align="right"> -1.2 </td> <td align="right"> -1.5 </td> </tr>
+  <tr> <td align="right"> 3 </td> <td align="right"> 0.5 </td> <td align="right"> 1.0 </td> <td align="right"> 1.3 </td> <td align="right"> 0.3 </td> <td align="right"> -1.6 </td> </tr>
+  <tr> <td align="right"> 4 </td> <td align="right"> 0.3 </td> <td align="right"> 0.3 </td> <td align="right"> 0.5 </td> <td align="right"> 0.4 </td> <td align="right"> -1.6 </td> </tr>
+  <tr> <td align="right"> 5 </td> <td align="right"> -1.6 </td> <td align="right"> 0.3 </td> <td align="right"> -1.0 </td> <td align="right"> -1.4 </td> <td align="right"> -1.5 </td> </tr>
+   </table>
+
+Instead of the derived constructs we could also use 'a' single statement from each factor as a proxy for the factor. Usually researchers pick the attitude per factor with the highest loading for that specific factor (eg. looking at the rotated factor loadings in the table above we would choose Q1_27 for the first factor: "Boating is the number one thing I do with my spare time"). This is the approach that we would like to follow here. So for the 2nd step - the cluster analysis - we are using the following 10 statements instead of the full list of 29 statements. Each of these statements has the highest loading within the factor they belong to:
+
+<br>
+<table class='table table-striped table-hover table-bordered'>
+<caption align="top"> Raw attributes with highest loading per factor: Boating Company </caption>
+<tr> <th>  </th> <th> Raw Attributes </th>  </tr>
+  <tr> <td align="right"> Factor 1 </td> <td> July </td> </tr>
+  <tr> <td align="right"> Factor 2 </td> <td> December </td> </tr>
+  <tr> <td align="right"> Factor 3 </td> <td> April </td> </tr>
+  <tr> <td align="right"> Factor 4 </td> <td> January </td> </tr>
+  <tr> <td align="right"> Factor 5 </td> <td> Class code </td> </tr>
+   </table>
+
+Cluster Analysis
+--------------------------------------------
+
+Clustering organizes observations that are close into groups. This will allow us to define different market segments. In cluster analysis we have to define:
+
+How do we define close?
+How do we group things?
+How do we visualize the grouping?
+How do we interpret the grouping?
+
+Clustering analysis involves calculating how different indivudals in the sample are based on a series of attributes. For instance, in the factor analysis we calculated for each individual in the sample 10 factor scores that summarize well the variance of the 29 attitudional questions. 
+
+People that are similar in terms of the 10 selected attitudinal characteristics can be grouped together. The dendrogram allows having a quick visualization of how different customers stick together. The dendrogram groups customers 'little by little' based on the how different (similar) the 10 attitudes are. People with similar attitudes would stick together and depending on where you cut the dendogram tree you can have different groups or segments. The question of how many groups or clusters we will have depends on the structure of the data but also involves some intuition or knowledge about the market so that the solutions makes not only sense from a statistical perspective but also from a business perspective. So clustering is a very iterative process where the team needs to look at many different solutions to identify the optimal solutions. The optimal solution can only be identified if we profile these solutions and interpret and compare the different segment profiles. 
+
+After a few iterations the team looked at a few different segment profiles (3-7 segment solutions). Based on the inital segment profiles we have decided to move on with a 5 cluster solution as the optimal solution from a business perspective in the boating industry. 
+
+The figure below is the Dendrogram. 
+
+
+
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
+
+The next figure (distance plot) displays the heights of the dendrogram branches as we move from smaller to larger segments:
+
+<!-- LineChart generated in R 3.1.2 by googleVis 0.5.8 package -->
+<!-- Mon Feb 16 21:58:44 2015 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataLineChartID8b617832c599 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+1393976.743 
+],
+[
+ "2",
+740061.1057 
+],
+[
+ "3",
+210976.6999 
+],
+[
+ "4",
+186953.4028 
+],
+[
+ "5",
+139197.8814 
+],
+[
+ "6",
+122103.0765 
+],
+[
+ "7",
+92318.51628 
+],
+[
+ "8",
+87873.51025 
+],
+[
+ "9",
+81734.34916 
+],
+[
+ "10",
+75341.82115 
+],
+[
+ "11",
+58614.33939 
+],
+[
+ "12",
+56309.05639 
+],
+[
+ "13",
+51850.7466 
+],
+[
+ "14",
+47938.02836 
+],
+[
+ "15",
+46274.35866 
+],
+[
+ "16",
+44078.81219 
+],
+[
+ "17",
+43982.7069 
+],
+[
+ "18",
+40570.87751 
+],
+[
+ "19",
+40284.91424 
+],
+[
+ "20",
+29498.39654 
+],
+[
+ "21",
+29123.06163 
+],
+[
+ "22",
+28942.51192 
+],
+[
+ "23",
+27200.71237 
+],
+[
+ "24",
+26291.61708 
+],
+[
+ "25",
+26101.5889 
+],
+[
+ "26",
+25966.48742 
+],
+[
+ "27",
+24610.91299 
+],
+[
+ "28",
+22565.11664 
+],
+[
+ "29",
+21913.39793 
+],
+[
+ "30",
+21412.829 
+],
+[
+ "31",
+20618.37684 
+],
+[
+ "32",
+19889.65849 
+],
+[
+ "33",
+19563.08245 
+],
+[
+ "34",
+18666.49504 
+],
+[
+ "35",
+17493.16566 
+],
+[
+ "36",
+16070.32818 
+],
+[
+ "37",
+16038.60073 
+],
+[
+ "38",
+15783.30869 
+],
+[
+ "39",
+13230.16279 
+],
+[
+ "40",
+13167.12692 
+],
+[
+ "41",
+12558.52279 
+],
+[
+ "42",
+12472.12425 
+],
+[
+ "43",
+12387.1985 
+],
+[
+ "44",
+12319.74258 
+],
+[
+ "45",
+12273.56653 
+],
+[
+ "46",
+12218.78053 
+],
+[
+ "47",
+12192.8423 
+],
+[
+ "48",
+12024.25739 
+],
+[
+ "49",
+11785.36676 
+],
+[
+ "50",
+11446.44987 
+],
+[
+ "51",
+10903.60667 
+],
+[
+ "52",
+10781.45281 
+],
+[
+ "53",
+10693.83822 
+],
+[
+ "54",
+10272.12528 
+],
+[
+ "55",
+10090.10393 
+],
+[
+ "56",
+9741.575704 
+],
+[
+ "57",
+9676.161267 
+],
+[
+ "58",
+9665.195608 
+],
+[
+ "59",
+9624.551908 
+],
+[
+ "60",
+9564.904604 
+],
+[
+ "61",
+9478.819674 
+],
+[
+ "62",
+8481.158643 
+],
+[
+ "63",
+8376.992584 
+],
+[
+ "64",
+8356.957824 
+],
+[
+ "65",
+8259.607417 
+],
+[
+ "66",
+8001.359748 
+],
+[
+ "67",
+8000.441287 
+],
+[
+ "68",
+7916.849703 
+],
+[
+ "69",
+7878.362996 
+],
+[
+ "70",
+7691.223137 
+],
+[
+ "71",
+7455.27961 
+],
+[
+ "72",
+7412.13694 
+],
+[
+ "73",
+6939.809599 
+],
+[
+ "74",
+6599.587868 
+],
+[
+ "75",
+6566.693445 
+],
+[
+ "76",
+6370.784302 
+],
+[
+ "77",
+6121.910555 
+],
+[
+ "78",
+6118.084903 
+],
+[
+ "79",
+6106.343833 
+],
+[
+ "80",
+5900.102443 
+],
+[
+ "81",
+5874.199851 
+],
+[
+ "82",
+5650.199537 
+],
+[
+ "83",
+5581.421789 
+],
+[
+ "84",
+5559.323263 
+],
+[
+ "85",
+5486.80913 
+],
+[
+ "86",
+5370.431754 
+],
+[
+ "87",
+5071.447065 
+],
+[
+ "88",
+4993.156979 
+],
+[
+ "89",
+4989.373228 
+],
+[
+ "90",
+4967.044414 
+],
+[
+ "91",
+4885.256915 
+],
+[
+ "92",
+4825.664344 
+],
+[
+ "93",
+4810.005432 
+],
+[
+ "94",
+4662.586981 
+],
+[
+ "95",
+4605.411155 
+],
+[
+ "96",
+4566.137719 
+],
+[
+ "97",
+4557.942357 
+],
+[
+ "98",
+4506.846118 
+],
+[
+ "99",
+4444.60766 
+],
+[
+ "100",
+4398.95891 
+],
+[
+ "101",
+4389.472563 
+],
+[
+ "102",
+4376.963138 
+],
+[
+ "103",
+4337.021902 
+],
+[
+ "104",
+4286.117468 
+],
+[
+ "105",
+4242.524766 
+],
+[
+ "106",
+4224.759984 
+],
+[
+ "107",
+4221.005174 
+],
+[
+ "108",
+4198.394458 
+],
+[
+ "109",
+4192.131936 
+],
+[
+ "110",
+4188.624978 
+],
+[
+ "111",
+4085.501497 
+],
+[
+ "112",
+4084.778253 
+],
+[
+ "113",
+4065.372746 
+],
+[
+ "114",
+4062.179708 
+],
+[
+ "115",
+4041.363383 
+],
+[
+ "116",
+3947.209577 
+],
+[
+ "117",
+3900.82636 
+],
+[
+ "118",
+3895.606131 
+],
+[
+ "119",
+3891.263896 
+],
+[
+ "120",
+3854.917791 
+],
+[
+ "121",
+3737.128935 
+],
+[
+ "122",
+3719.154816 
+],
+[
+ "123",
+3708.300384 
+],
+[
+ "124",
+3674.193665 
+],
+[
+ "125",
+3521.443108 
+],
+[
+ "126",
+3498.59507 
+],
+[
+ "127",
+3481.383702 
+],
+[
+ "128",
+3464.808554 
+],
+[
+ "129",
+3435.210224 
+],
+[
+ "130",
+3411.470243 
+],
+[
+ "131",
+3406.840777 
+],
+[
+ "132",
+3399.005185 
+],
+[
+ "133",
+3372.874932 
+],
+[
+ "134",
+3334.363317 
+],
+[
+ "135",
+3292.362119 
+],
+[
+ "136",
+3282.840018 
+],
+[
+ "137",
+3261.934181 
+],
+[
+ "138",
+3254.127708 
+],
+[
+ "139",
+3194.935836 
+],
+[
+ "140",
+3092.66218 
+],
+[
+ "141",
+3090.654725 
+],
+[
+ "142",
+3049.1972 
+],
+[
+ "143",
+3019.295281 
+],
+[
+ "144",
+3018.586461 
+],
+[
+ "145",
+3006.50343 
+],
+[
+ "146",
+2912.905275 
+],
+[
+ "147",
+2865.772613 
+],
+[
+ "148",
+2859.167219 
+],
+[
+ "149",
+2843.981433 
+],
+[
+ "150",
+2774.561889 
+],
+[
+ "151",
+2752.690526 
+],
+[
+ "152",
+2746.969321 
+],
+[
+ "153",
+2746.035644 
+],
+[
+ "154",
+2732.895312 
+],
+[
+ "155",
+2725.022168 
+],
+[
+ "156",
+2716.422779 
+],
+[
+ "157",
+2680.725236 
+],
+[
+ "158",
+2661.582244 
+],
+[
+ "159",
+2613.794749 
+],
+[
+ "160",
+2603.885933 
+],
+[
+ "161",
+2570.511917 
+],
+[
+ "162",
+2562.059639 
+],
+[
+ "163",
+2556.461586 
+],
+[
+ "164",
+2547.513953 
+],
+[
+ "165",
+2541.960399 
+],
+[
+ "166",
+2528.119013 
+],
+[
+ "167",
+2522.96807 
+],
+[
+ "168",
+2520.493696 
+],
+[
+ "169",
+2497.674145 
+],
+[
+ "170",
+2494.244849 
+],
+[
+ "171",
+2452.967375 
+],
+[
+ "172",
+2440.955791 
+],
+[
+ "173",
+2439.605174 
+],
+[
+ "174",
+2414.439081 
+],
+[
+ "175",
+2385.308827 
+],
+[
+ "176",
+2385.202821 
+],
+[
+ "177",
+2374.255195 
+],
+[
+ "178",
+2367.435881 
+],
+[
+ "179",
+2363.361485 
+],
+[
+ "180",
+2355.184754 
+],
+[
+ "181",
+2337.125515 
+],
+[
+ "182",
+2285.879407 
+],
+[
+ "183",
+2284.023182 
+],
+[
+ "184",
+2270.080253 
+],
+[
+ "185",
+2268.172605 
+],
+[
+ "186",
+2266.658787 
+],
+[
+ "187",
+2261.98658 
+],
+[
+ "188",
+2251.717979 
+],
+[
+ "189",
+2248.042591 
+],
+[
+ "190",
+2246.343689 
+],
+[
+ "191",
+2238.85966 
+],
+[
+ "192",
+2213.207468 
+],
+[
+ "193",
+2197.472567 
+],
+[
+ "194",
+2168.055504 
+],
+[
+ "195",
+2141.827584 
+],
+[
+ "196",
+2139.433591 
+],
+[
+ "197",
+2123.199276 
+],
+[
+ "198",
+2119.171938 
+],
+[
+ "199",
+2108.604032 
+],
+[
+ "200",
+2105.791422 
+],
+[
+ "201",
+2101.644961 
+],
+[
+ "202",
+2083.507312 
+],
+[
+ "203",
+2079.79699 
+],
+[
+ "204",
+2073.798084 
+],
+[
+ "205",
+2056.063425 
+],
+[
+ "206",
+2050.625177 
+],
+[
+ "207",
+2049.934157 
+],
+[
+ "208",
+2018.678509 
+],
+[
+ "209",
+1997.839314 
+],
+[
+ "210",
+1978.970758 
+],
+[
+ "211",
+1978.03083 
+],
+[
+ "212",
+1958.360857 
+],
+[
+ "213",
+1955.267485 
+],
+[
+ "214",
+1950.134776 
+],
+[
+ "215",
+1948.566458 
+],
+[
+ "216",
+1945.91855 
+],
+[
+ "217",
+1943.517744 
+],
+[
+ "218",
+1937.635258 
+],
+[
+ "219",
+1930.439203 
+],
+[
+ "220",
+1929.996928 
+],
+[
+ "221",
+1916.075103 
+],
+[
+ "222",
+1887.749934 
+],
+[
+ "223",
+1883.270793 
+],
+[
+ "224",
+1845.327646 
+],
+[
+ "225",
+1821.45989 
+],
+[
+ "226",
+1819.958162 
+],
+[
+ "227",
+1812.908127 
+],
+[
+ "228",
+1799.899032 
+],
+[
+ "229",
+1788.051553 
+],
+[
+ "230",
+1773.671311 
+],
+[
+ "231",
+1772.75632 
+],
+[
+ "232",
+1772.484514 
+],
+[
+ "233",
+1768.207789 
+],
+[
+ "234",
+1764.088952 
+],
+[
+ "235",
+1759.105982 
+],
+[
+ "236",
+1745.263871 
+],
+[
+ "237",
+1725.199196 
+],
+[
+ "238",
+1711.131955 
+],
+[
+ "239",
+1709.010316 
+],
+[
+ "240",
+1704.036271 
+],
+[
+ "241",
+1704.010929 
+],
+[
+ "242",
+1701.397318 
+],
+[
+ "243",
+1697.363618 
+],
+[
+ "244",
+1694.447491 
+],
+[
+ "245",
+1692.525257 
+],
+[
+ "246",
+1689.854868 
+],
+[
+ "247",
+1686.611137 
+],
+[
+ "248",
+1672.445555 
+],
+[
+ "249",
+1643.29675 
+],
+[
+ "250",
+1639.083302 
+],
+[
+ "251",
+1632.182151 
+],
+[
+ "252",
+1621.41512 
+],
+[
+ "253",
+1612.221567 
+],
+[
+ "254",
+1610.108108 
+],
+[
+ "255",
+1605.502071 
+],
+[
+ "256",
+1592.6941 
+],
+[
+ "257",
+1581.130984 
+],
+[
+ "258",
+1558.857914 
+],
+[
+ "259",
+1554.705376 
+],
+[
+ "260",
+1553.374464 
+],
+[
+ "261",
+1553.122156 
+],
+[
+ "262",
+1533.39958 
+],
+[
+ "263",
+1533.03578 
+],
+[
+ "264",
+1532.242882 
+],
+[
+ "265",
+1515.670272 
+],
+[
+ "266",
+1509.464413 
+],
+[
+ "267",
+1504.572859 
+],
+[
+ "268",
+1504.532878 
+],
+[
+ "269",
+1495.039715 
+],
+[
+ "270",
+1487.175398 
+],
+[
+ "271",
+1486.479924 
+],
+[
+ "272",
+1485.982832 
+],
+[
+ "273",
+1482.827423 
+],
+[
+ "274",
+1481.451055 
+],
+[
+ "275",
+1480.119968 
+],
+[
+ "276",
+1480.022945 
+],
+[
+ "277",
+1465.107199 
+],
+[
+ "278",
+1458.88157 
+],
+[
+ "279",
+1457.632791 
+],
+[
+ "280",
+1452.618739 
+],
+[
+ "281",
+1450.796856 
+],
+[
+ "282",
+1449.244444 
+],
+[
+ "283",
+1446.267092 
+],
+[
+ "284",
+1445.522327 
+],
+[
+ "285",
+1435.669368 
+],
+[
+ "286",
+1420.986483 
+],
+[
+ "287",
+1420.166533 
+],
+[
+ "288",
+1419.618752 
+],
+[
+ "289",
+1413.406751 
+],
+[
+ "290",
+1399.725606 
+],
+[
+ "291",
+1394.260984 
+],
+[
+ "292",
+1387.745224 
+],
+[
+ "293",
+1379.92172 
+],
+[
+ "294",
+1375.345012 
+],
+[
+ "295",
+1367.773094 
+],
+[
+ "296",
+1362.893321 
+],
+[
+ "297",
+1356.422341 
+],
+[
+ "298",
+1355.493749 
+],
+[
+ "299",
+1353.537552 
+],
+[
+ "300",
+1344.646538 
+],
+[
+ "301",
+1338.652128 
+],
+[
+ "302",
+1337.676494 
+],
+[
+ "303",
+1334.854832 
+],
+[
+ "304",
+1328.180616 
+],
+[
+ "305",
+1327.623962 
+],
+[
+ "306",
+1325.464298 
+],
+[
+ "307",
+1323.647528 
+],
+[
+ "308",
+1320.766322 
+],
+[
+ "309",
+1318.606389 
+],
+[
+ "310",
+1316.273661 
+],
+[
+ "311",
+1316.086451 
+],
+[
+ "312",
+1313.26821 
+],
+[
+ "313",
+1310.056564 
+],
+[
+ "314",
+1306.621424 
+],
+[
+ "315",
+1305.591278 
+],
+[
+ "316",
+1302.1729 
+],
+[
+ "317",
+1296.484427 
+],
+[
+ "318",
+1295.815903 
+],
+[
+ "319",
+1295.208906 
+],
+[
+ "320",
+1291.508109 
+],
+[
+ "321",
+1288.454234 
+],
+[
+ "322",
+1274.814854 
+],
+[
+ "323",
+1274.290922 
+],
+[
+ "324",
+1272.450307 
+],
+[
+ "325",
+1270.572959 
+],
+[
+ "326",
+1269.388103 
+],
+[
+ "327",
+1269.197204 
+],
+[
+ "328",
+1263.509907 
+],
+[
+ "329",
+1263.426147 
+],
+[
+ "330",
+1262.433998 
+],
+[
+ "331",
+1257.820408 
+],
+[
+ "332",
+1255.876128 
+],
+[
+ "333",
+1249.90214 
+],
+[
+ "334",
+1249.866711 
+],
+[
+ "335",
+1248.633642 
+],
+[
+ "336",
+1248.618545 
+],
+[
+ "337",
+1247.39708 
+],
+[
+ "338",
+1229.215103 
+],
+[
+ "339",
+1228.225359 
+],
+[
+ "340",
+1223.785135 
+],
+[
+ "341",
+1223.492222 
+],
+[
+ "342",
+1216.268672 
+],
+[
+ "343",
+1213.653512 
+],
+[
+ "344",
+1189.692264 
+],
+[
+ "345",
+1186.008119 
+],
+[
+ "346",
+1179.917708 
+],
+[
+ "347",
+1179.516182 
+],
+[
+ "348",
+1178.740197 
+],
+[
+ "349",
+1177.21555 
+],
+[
+ "350",
+1175.952131 
+],
+[
+ "351",
+1175.026275 
+],
+[
+ "352",
+1173.779804 
+],
+[
+ "353",
+1150.550598 
+],
+[
+ "354",
+1148.297204 
+],
+[
+ "355",
+1145.101092 
+],
+[
+ "356",
+1144.320172 
+],
+[
+ "357",
+1142.452438 
+],
+[
+ "358",
+1139.112827 
+],
+[
+ "359",
+1137.31571 
+],
+[
+ "360",
+1135.729149 
+],
+[
+ "361",
+1134.252144 
+],
+[
+ "362",
+1133.703819 
+],
+[
+ "363",
+1128.28796 
+],
+[
+ "364",
+1128.001554 
+],
+[
+ "365",
+1125.888232 
+],
+[
+ "366",
+1112.952347 
+],
+[
+ "367",
+1110.173153 
+],
+[
+ "368",
+1104.068785 
+],
+[
+ "369",
+1092.590513 
+],
+[
+ "370",
+1091.365325 
+],
+[
+ "371",
+1086.229567 
+],
+[
+ "372",
+1084.856271 
+],
+[
+ "373",
+1084.660842 
+],
+[
+ "374",
+1073.601335 
+],
+[
+ "375",
+1068.238517 
+],
+[
+ "376",
+1067.54338 
+],
+[
+ "377",
+1059.149984 
+],
+[
+ "378",
+1057.207189 
+],
+[
+ "379",
+1055.909229 
+],
+[
+ "380",
+1055.171541 
+],
+[
+ "381",
+1054.593576 
+],
+[
+ "382",
+1053.986962 
+],
+[
+ "383",
+1044.987075 
+],
+[
+ "384",
+1039.353089 
+],
+[
+ "385",
+1038.13669 
+],
+[
+ "386",
+1035.362562 
+],
+[
+ "387",
+1027.828813 
+],
+[
+ "388",
+1023.714807 
+],
+[
+ "389",
+1022.560975 
+],
+[
+ "390",
+1022.369355 
+],
+[
+ "391",
+1017.488782 
+],
+[
+ "392",
+1017.136767 
+],
+[
+ "393",
+1017.040492 
+],
+[
+ "394",
+1016.700191 
+],
+[
+ "395",
+1012.897636 
+],
+[
+ "396",
+1006.039727 
+],
+[
+ "397",
+1005.411859 
+],
+[
+ "398",
+1001.555844 
+],
+[
+ "399",
+1001.290224 
+],
+[
+ "400",
+998.0797274 
+],
+[
+ "401",
+995.5585662 
+],
+[
+ "402",
+994.2640938 
+],
+[
+ "403",
+994.1129611 
+],
+[
+ "404",
+992.3127773 
+],
+[
+ "405",
+991.1277066 
+],
+[
+ "406",
+989.4735032 
+],
+[
+ "407",
+987.3697298 
+],
+[
+ "408",
+985.2226115 
+],
+[
+ "409",
+984.9450767 
+],
+[
+ "410",
+981.6038166 
+],
+[
+ "411",
+980.2822587 
+],
+[
+ "412",
+979.4259611 
+],
+[
+ "413",
+974.2805393 
+],
+[
+ "414",
+970.5804996 
+],
+[
+ "415",
+966.3597663 
+],
+[
+ "416",
+961.8641651 
+],
+[
+ "417",
+961.0675499 
+],
+[
+ "418",
+956.5521704 
+],
+[
+ "419",
+955.9112588 
+],
+[
+ "420",
+954.100424 
+],
+[
+ "421",
+952.5300991 
+],
+[
+ "422",
+947.1668681 
+],
+[
+ "423",
+946.6349523 
+],
+[
+ "424",
+946.5020055 
+],
+[
+ "425",
+945.6862837 
+],
+[
+ "426",
+942.3491079 
+],
+[
+ "427",
+941.918233 
+],
+[
+ "428",
+938.7125603 
+],
+[
+ "429",
+937.6299139 
+],
+[
+ "430",
+936.0663545 
+],
+[
+ "431",
+935.0194572 
+],
+[
+ "432",
+934.5046747 
+],
+[
+ "433",
+929.7635522 
+],
+[
+ "434",
+926.6256347 
+],
+[
+ "435",
+925.6761062 
+],
+[
+ "436",
+924.9209509 
+],
+[
+ "437",
+917.2629816 
+],
+[
+ "438",
+915.5599716 
+],
+[
+ "439",
+915.4436588 
+],
+[
+ "440",
+914.3665822 
+],
+[
+ "441",
+913.5123602 
+],
+[
+ "442",
+913.3477142 
+],
+[
+ "443",
+912.763476 
+],
+[
+ "444",
+912.2993547 
+],
+[
+ "445",
+912.1434239 
+],
+[
+ "446",
+911.301509 
+],
+[
+ "447",
+903.0542786 
+],
+[
+ "448",
+900.6072734 
+],
+[
+ "449",
+899.2429336 
+],
+[
+ "450",
+898.4741893 
+],
+[
+ "451",
+898.2205083 
+],
+[
+ "452",
+898.1712225 
+],
+[
+ "453",
+895.6723862 
+],
+[
+ "454",
+895.2067922 
+],
+[
+ "455",
+894.4189231 
+],
+[
+ "456",
+890.6673933 
+],
+[
+ "457",
+888.32896 
+],
+[
+ "458",
+883.9201597 
+],
+[
+ "459",
+881.7648123 
+],
+[
+ "460",
+879.6121823 
+],
+[
+ "461",
+877.5354008 
+],
+[
+ "462",
+877.0689919 
+],
+[
+ "463",
+874.4155606 
+],
+[
+ "464",
+872.322381 
+],
+[
+ "465",
+870.7107728 
+],
+[
+ "466",
+869.5576242 
+],
+[
+ "467",
+869.3540181 
+],
+[
+ "468",
+867.8880638 
+],
+[
+ "469",
+867.1657938 
+],
+[
+ "470",
+865.8253596 
+],
+[
+ "471",
+860.5208111 
+],
+[
+ "472",
+859.7997206 
+],
+[
+ "473",
+859.1591874 
+],
+[
+ "474",
+858.7280675 
+],
+[
+ "475",
+858.578536 
+],
+[
+ "476",
+858.429719 
+],
+[
+ "477",
+853.6012437 
+],
+[
+ "478",
+850.5271774 
+],
+[
+ "479",
+848.8201015 
+],
+[
+ "480",
+846.5846682 
+],
+[
+ "481",
+846.0468277 
+],
+[
+ "482",
+843.8037137 
+],
+[
+ "483",
+839.8413707 
+],
+[
+ "484",
+838.7348585 
+],
+[
+ "485",
+836.2611035 
+],
+[
+ "486",
+833.8193381 
+],
+[
+ "487",
+833.4302785 
+],
+[
+ "488",
+832.438436 
+],
+[
+ "489",
+831.9602494 
+],
+[
+ "490",
+828.3936559 
+],
+[
+ "491",
+826.5226373 
+],
+[
+ "492",
+821.8495334 
+],
+[
+ "493",
+821.1567739 
+],
+[
+ "494",
+819.9134101 
+],
+[
+ "495",
+818.7959458 
+],
+[
+ "496",
+816.3845662 
+],
+[
+ "497",
+815.9004439 
+],
+[
+ "498",
+814.1615154 
+],
+[
+ "499",
+814.0625635 
+],
+[
+ "500",
+805.223477 
+],
+[
+ "501",
+803.9549265 
+],
+[
+ "502",
+802.6536542 
+],
+[
+ "503",
+800.9657201 
+],
+[
+ "504",
+799.5938231 
+],
+[
+ "505",
+797.5964126 
+],
+[
+ "506",
+795.092117 
+],
+[
+ "507",
+793.4090221 
+],
+[
+ "508",
+791.7571992 
+],
+[
+ "509",
+791.6233619 
+],
+[
+ "510",
+791.1877148 
+],
+[
+ "511",
+790.766773 
+],
+[
+ "512",
+790.553188 
+],
+[
+ "513",
+787.5716982 
+],
+[
+ "514",
+785.8980095 
+],
+[
+ "515",
+783.724127 
+],
+[
+ "516",
+783.2647358 
+],
+[
+ "517",
+780.3770897 
+],
+[
+ "518",
+779.0416911 
+],
+[
+ "519",
+778.5286536 
+],
+[
+ "520",
+777.790158 
+],
+[
+ "521",
+774.5321855 
+],
+[
+ "522",
+774.3882379 
+],
+[
+ "523",
+774.2095249 
+],
+[
+ "524",
+771.9708544 
+],
+[
+ "525",
+770.0783854 
+],
+[
+ "526",
+768.5334971 
+],
+[
+ "527",
+767.5158867 
+],
+[
+ "528",
+766.4446744 
+],
+[
+ "529",
+765.5311846 
+],
+[
+ "530",
+764.644989 
+],
+[
+ "531",
+764.0300868 
+],
+[
+ "532",
+763.0435696 
+],
+[
+ "533",
+762.153744 
+],
+[
+ "534",
+761.6145552 
+],
+[
+ "535",
+761.234544 
+],
+[
+ "536",
+756.8939342 
+],
+[
+ "537",
+753.3568641 
+],
+[
+ "538",
+752.0192446 
+],
+[
+ "539",
+751.541361 
+],
+[
+ "540",
+749.9553287 
+],
+[
+ "541",
+748.6372075 
+],
+[
+ "542",
+743.1515405 
+],
+[
+ "543",
+741.7524271 
+],
+[
+ "544",
+740.2009121 
+],
+[
+ "545",
+738.6718608 
+],
+[
+ "546",
+737.9379153 
+],
+[
+ "547",
+737.9272876 
+],
+[
+ "548",
+736.6288936 
+],
+[
+ "549",
+736.0656361 
+],
+[
+ "550",
+735.8540864 
+],
+[
+ "551",
+733.6352911 
+],
+[
+ "552",
+733.1596464 
+],
+[
+ "553",
+731.7336857 
+],
+[
+ "554",
+731.2645191 
+],
+[
+ "555",
+729.9786593 
+],
+[
+ "556",
+729.1423216 
+],
+[
+ "557",
+728.1322988 
+],
+[
+ "558",
+725.2700229 
+],
+[
+ "559",
+725.0814626 
+],
+[
+ "560",
+724.9468946 
+],
+[
+ "561",
+723.4786181 
+],
+[
+ "562",
+722.5809702 
+],
+[
+ "563",
+719.9708772 
+],
+[
+ "564",
+719.6323362 
+],
+[
+ "565",
+718.8346661 
+],
+[
+ "566",
+718.2923522 
+],
+[
+ "567",
+718.0330633 
+],
+[
+ "568",
+717.7378037 
+],
+[
+ "569",
+716.229296 
+],
+[
+ "570",
+715.7987207 
+],
+[
+ "571",
+715.5433272 
+],
+[
+ "572",
+714.9222792 
+],
+[
+ "573",
+713.101063 
+],
+[
+ "574",
+710.9983294 
+],
+[
+ "575",
+710.037032 
+],
+[
+ "576",
+709.5329223 
+],
+[
+ "577",
+706.6481822 
+],
+[
+ "578",
+706.2375176 
+],
+[
+ "579",
+704.6233967 
+],
+[
+ "580",
+700.7240863 
+],
+[
+ "581",
+698.8698677 
+],
+[
+ "582",
+692.3770649 
+],
+[
+ "583",
+690.0954626 
+],
+[
+ "584",
+688.9861323 
+],
+[
+ "585",
+686.9300572 
+],
+[
+ "586",
+686.7159701 
+],
+[
+ "587",
+683.2806572 
+],
+[
+ "588",
+681.4242438 
+],
+[
+ "589",
+680.5644518 
+],
+[
+ "590",
+679.8585628 
+],
+[
+ "591",
+677.5085951 
+],
+[
+ "592",
+676.5467965 
+],
+[
+ "593",
+674.8719862 
+],
+[
+ "594",
+674.3827661 
+],
+[
+ "595",
+674.004384 
+],
+[
+ "596",
+672.868101 
+],
+[
+ "597",
+672.4764755 
+],
+[
+ "598",
+671.8898719 
+],
+[
+ "599",
+671.8534664 
+],
+[
+ "600",
+669.939773 
+],
+[
+ "601",
+669.6454286 
+],
+[
+ "602",
+668.4949525 
+],
+[
+ "603",
+668.4014785 
+],
+[
+ "604",
+667.9212103 
+],
+[
+ "605",
+666.7880473 
+],
+[
+ "606",
+665.9789786 
+],
+[
+ "607",
+665.7953638 
+],
+[
+ "608",
+664.9736953 
+],
+[
+ "609",
+664.0865907 
+],
+[
+ "610",
+663.5147235 
+],
+[
+ "611",
+663.3994353 
+],
+[
+ "612",
+663.227651 
+],
+[
+ "613",
+661.2667716 
+],
+[
+ "614",
+660.4369165 
+],
+[
+ "615",
+659.2122669 
+],
+[
+ "616",
+657.3787775 
+],
+[
+ "617",
+656.3114951 
+],
+[
+ "618",
+656.1556011 
+],
+[
+ "619",
+655.2452884 
+],
+[
+ "620",
+654.3487884 
+],
+[
+ "621",
+653.9193205 
+],
+[
+ "622",
+653.8708592 
+],
+[
+ "623",
+653.5889142 
+],
+[
+ "624",
+652.6725415 
+],
+[
+ "625",
+650.4162918 
+],
+[
+ "626",
+650.1673768 
+],
+[
+ "627",
+648.0362644 
+],
+[
+ "628",
+645.7731701 
+],
+[
+ "629",
+645.3378567 
+],
+[
+ "630",
+644.9001232 
+],
+[
+ "631",
+642.9997169 
+],
+[
+ "632",
+642.6714219 
+],
+[
+ "633",
+642.3212085 
+],
+[
+ "634",
+640.508421 
+],
+[
+ "635",
+640.0246039 
+],
+[
+ "636",
+638.6030783 
+],
+[
+ "637",
+637.6625615 
+],
+[
+ "638",
+637.5588035 
+],
+[
+ "639",
+637.545173 
+],
+[
+ "640",
+637.378406 
+],
+[
+ "641",
+635.774331 
+],
+[
+ "642",
+633.5557157 
+],
+[
+ "643",
+632.529589 
+],
+[
+ "644",
+632.0350974 
+],
+[
+ "645",
+631.0569908 
+],
+[
+ "646",
+630.8996572 
+],
+[
+ "647",
+630.2241255 
+],
+[
+ "648",
+629.9186412 
+],
+[
+ "649",
+627.2197879 
+],
+[
+ "650",
+626.6955026 
+],
+[
+ "651",
+625.5386914 
+],
+[
+ "652",
+624.8548566 
+],
+[
+ "653",
+623.7002485 
+],
+[
+ "654",
+622.8402684 
+],
+[
+ "655",
+622.4240617 
+],
+[
+ "656",
+622.3041902 
+],
+[
+ "657",
+621.4805815 
+],
+[
+ "658",
+621.453446 
+],
+[
+ "659",
+618.8790672 
+],
+[
+ "660",
+618.7241795 
+],
+[
+ "661",
+617.2219988 
+],
+[
+ "662",
+616.0840857 
+],
+[
+ "663",
+615.6278987 
+],
+[
+ "664",
+611.8035013 
+],
+[
+ "665",
+611.6333047 
+],
+[
+ "666",
+610.9852921 
+],
+[
+ "667",
+610.6695457 
+],
+[
+ "668",
+609.6355297 
+],
+[
+ "669",
+609.2347659 
+],
+[
+ "670",
+608.9419638 
+],
+[
+ "671",
+608.8194101 
+],
+[
+ "672",
+607.4910605 
+],
+[
+ "673",
+606.1348648 
+],
+[
+ "674",
+605.902292 
+],
+[
+ "675",
+605.35663 
+],
+[
+ "676",
+604.5762321 
+],
+[
+ "677",
+603.5564451 
+],
+[
+ "678",
+603.4050701 
+],
+[
+ "679",
+602.072964 
+],
+[
+ "680",
+601.8686256 
+],
+[
+ "681",
+601.7369162 
+],
+[
+ "682",
+601.5651988 
+],
+[
+ "683",
+601.0957853 
+],
+[
+ "684",
+600.6075366 
+],
+[
+ "685",
+599.1530877 
+],
+[
+ "686",
+598.9133022 
+],
+[
+ "687",
+597.8825798 
+],
+[
+ "688",
+596.3567794 
+],
+[
+ "689",
+594.1071714 
+],
+[
+ "690",
+594.0589563 
+],
+[
+ "691",
+592.644975 
+],
+[
+ "692",
+592.5767039 
+],
+[
+ "693",
+592.3657662 
+],
+[
+ "694",
+590.702533 
+],
+[
+ "695",
+590.1093119 
+],
+[
+ "696",
+589.9201493 
+],
+[
+ "697",
+587.6309972 
+],
+[
+ "698",
+587.5409955 
+],
+[
+ "699",
+586.6067991 
+],
+[
+ "700",
+586.5310175 
+],
+[
+ "701",
+585.2540547 
+],
+[
+ "702",
+584.7211118 
+],
+[
+ "703",
+584.1209811 
+],
+[
+ "704",
+583.052499 
+],
+[
+ "705",
+582.8608288 
+],
+[
+ "706",
+582.6038541 
+],
+[
+ "707",
+581.7931977 
+],
+[
+ "708",
+579.9593551 
+],
+[
+ "709",
+579.8361838 
+],
+[
+ "710",
+579.646248 
+],
+[
+ "711",
+579.2426089 
+],
+[
+ "712",
+579.1010166 
+],
+[
+ "713",
+578.0646706 
+],
+[
+ "714",
+577.0531401 
+],
+[
+ "715",
+576.4572838 
+],
+[
+ "716",
+576.2216204 
+],
+[
+ "717",
+575.8238956 
+],
+[
+ "718",
+575.7237168 
+],
+[
+ "719",
+574.3022509 
+],
+[
+ "720",
+573.1133361 
+],
+[
+ "721",
+572.514939 
+],
+[
+ "722",
+571.9479411 
+],
+[
+ "723",
+571.8395381 
+],
+[
+ "724",
+571.0381294 
+],
+[
+ "725",
+568.9894551 
+],
+[
+ "726",
+568.2326337 
+],
+[
+ "727",
+567.83712 
+],
+[
+ "728",
+567.7531859 
+],
+[
+ "729",
+567.44771 
+],
+[
+ "730",
+566.888878 
+],
+[
+ "731",
+565.4730335 
+],
+[
+ "732",
+564.6988829 
+],
+[
+ "733",
+564.3465517 
+],
+[
+ "734",
+564.3070918 
+],
+[
+ "735",
+562.6419821 
+],
+[
+ "736",
+562.5594014 
+],
+[
+ "737",
+561.9121272 
+],
+[
+ "738",
+561.0701482 
+],
+[
+ "739",
+560.1473021 
+],
+[
+ "740",
+559.7837953 
+],
+[
+ "741",
+559.754658 
+],
+[
+ "742",
+559.0156377 
+],
+[
+ "743",
+558.9418769 
+],
+[
+ "744",
+557.6295497 
+],
+[
+ "745",
+556.8330091 
+],
+[
+ "746",
+556.2615006 
+],
+[
+ "747",
+555.7708912 
+],
+[
+ "748",
+554.3713317 
+],
+[
+ "749",
+554.0446738 
+],
+[
+ "750",
+553.6814876 
+],
+[
+ "751",
+553.3868557 
+],
+[
+ "752",
+552.9783803 
+],
+[
+ "753",
+552.7350179 
+],
+[
+ "754",
+552.2849208 
+],
+[
+ "755",
+551.5052095 
+],
+[
+ "756",
+551.3490126 
+],
+[
+ "757",
+551.2970846 
+],
+[
+ "758",
+549.1108537 
+],
+[
+ "759",
+548.996558 
+],
+[
+ "760",
+548.5170918 
+],
+[
+ "761",
+546.6972427 
+],
+[
+ "762",
+546.6391027 
+],
+[
+ "763",
+546.531621 
+],
+[
+ "764",
+545.4392712 
+],
+[
+ "765",
+544.0794777 
+],
+[
+ "766",
+543.3941185 
+],
+[
+ "767",
+540.9619794 
+],
+[
+ "768",
+540.5078062 
+],
+[
+ "769",
+540.2804827 
+],
+[
+ "770",
+540.1045614 
+],
+[
+ "771",
+539.9225033 
+],
+[
+ "772",
+539.9064734 
+],
+[
+ "773",
+539.7740795 
+],
+[
+ "774",
+539.179067 
+],
+[
+ "775",
+538.6590939 
+],
+[
+ "776",
+535.5603725 
+],
+[
+ "777",
+533.0446594 
+],
+[
+ "778",
+531.9314154 
+],
+[
+ "779",
+531.6775338 
+],
+[
+ "780",
+531.302112 
+],
+[
+ "781",
+530.4893967 
+],
+[
+ "782",
+529.973975 
+],
+[
+ "783",
+529.8820623 
+],
+[
+ "784",
+529.8047299 
+],
+[
+ "785",
+529.3171681 
+],
+[
+ "786",
+528.4763187 
+],
+[
+ "787",
+527.9789357 
+],
+[
+ "788",
+526.5905302 
+],
+[
+ "789",
+526.4718012 
+],
+[
+ "790",
+526.3411441 
+],
+[
+ "791",
+526.201283 
+],
+[
+ "792",
+525.2889013 
+],
+[
+ "793",
+525.1302032 
+],
+[
+ "794",
+524.8129023 
+],
+[
+ "795",
+524.4894508 
+],
+[
+ "796",
+523.9598763 
+],
+[
+ "797",
+523.0595144 
+],
+[
+ "798",
+522.1513191 
+],
+[
+ "799",
+522.0476485 
+],
+[
+ "800",
+522.0069218 
+],
+[
+ "801",
+521.6359951 
+],
+[
+ "802",
+521.4700375 
+],
+[
+ "803",
+521.0579057 
+],
+[
+ "804",
+520.9386709 
+],
+[
+ "805",
+520.7877857 
+],
+[
+ "806",
+519.2916994 
+],
+[
+ "807",
+518.4862366 
+],
+[
+ "808",
+518.185485 
+],
+[
+ "809",
+516.933496 
+],
+[
+ "810",
+516.5238994 
+],
+[
+ "811",
+514.6729798 
+],
+[
+ "812",
+514.1937218 
+],
+[
+ "813",
+512.9834305 
+],
+[
+ "814",
+512.6091819 
+],
+[
+ "815",
+512.5762924 
+],
+[
+ "816",
+512.4773166 
+],
+[
+ "817",
+512.0683548 
+],
+[
+ "818",
+511.8617591 
+],
+[
+ "819",
+511.6456436 
+],
+[
+ "820",
+511.177073 
+],
+[
+ "821",
+511.0791286 
+],
+[
+ "822",
+511.0702196 
+],
+[
+ "823",
+510.9847451 
+],
+[
+ "824",
+510.692812 
+],
+[
+ "825",
+510.6169991 
+],
+[
+ "826",
+510.4743289 
+],
+[
+ "827",
+510.3633161 
+],
+[
+ "828",
+508.6038418 
+],
+[
+ "829",
+507.9350625 
+],
+[
+ "830",
+506.715608 
+],
+[
+ "831",
+506.2291971 
+],
+[
+ "832",
+505.9087428 
+],
+[
+ "833",
+505.8802451 
+],
+[
+ "834",
+505.785711 
+],
+[
+ "835",
+505.6609536 
+],
+[
+ "836",
+505.6516237 
+],
+[
+ "837",
+505.0998021 
+],
+[
+ "838",
+504.8841451 
+],
+[
+ "839",
+503.3977085 
+],
+[
+ "840",
+503.1811495 
+],
+[
+ "841",
+502.5711251 
+],
+[
+ "842",
+502.4348801 
+],
+[
+ "843",
+502.4201659 
+],
+[
+ "844",
+502.0859065 
+],
+[
+ "845",
+502.0459742 
+],
+[
+ "846",
+501.8386195 
+],
+[
+ "847",
+501.4568775 
+],
+[
+ "848",
+500.9263239 
+],
+[
+ "849",
+500.286452 
+],
+[
+ "850",
+498.5238209 
+],
+[
+ "851",
+498.4472254 
+],
+[
+ "852",
+497.6277559 
+],
+[
+ "853",
+496.6286805 
+],
+[
+ "854",
+496.3171662 
+],
+[
+ "855",
+495.6967251 
+],
+[
+ "856",
+495.4790051 
+],
+[
+ "857",
+494.1927547 
+],
+[
+ "858",
+493.1967153 
+],
+[
+ "859",
+492.9977599 
+],
+[
+ "860",
+490.8974098 
+],
+[
+ "861",
+490.5366093 
+],
+[
+ "862",
+489.4394753 
+],
+[
+ "863",
+489.430281 
+],
+[
+ "864",
+489.246302 
+],
+[
+ "865",
+488.0368839 
+],
+[
+ "866",
+487.7858137 
+],
+[
+ "867",
+486.6528537 
+],
+[
+ "868",
+486.431974 
+],
+[
+ "869",
+486.3270505 
+],
+[
+ "870",
+485.3606906 
+],
+[
+ "871",
+485.1628593 
+],
+[
+ "872",
+484.7896451 
+],
+[
+ "873",
+484.6400603 
+],
+[
+ "874",
+484.5492751 
+],
+[
+ "875",
+483.4424759 
+],
+[
+ "876",
+483.330222 
+],
+[
+ "877",
+482.2126087 
+],
+[
+ "878",
+481.5419873 
+],
+[
+ "879",
+480.8502886 
+],
+[
+ "880",
+478.8302221 
+],
+[
+ "881",
+477.2633804 
+],
+[
+ "882",
+477.1729246 
+],
+[
+ "883",
+477.1505926 
+],
+[
+ "884",
+476.8827083 
+],
+[
+ "885",
+476.7945333 
+],
+[
+ "886",
+476.6267847 
+],
+[
+ "887",
+476.4402326 
+],
+[
+ "888",
+475.8035309 
+],
+[
+ "889",
+473.4110265 
+],
+[
+ "890",
+471.4919638 
+],
+[
+ "891",
+470.7152596 
+],
+[
+ "892",
+470.5003061 
+],
+[
+ "893",
+470.1467856 
+],
+[
+ "894",
+469.5567299 
+],
+[
+ "895",
+469.3029817 
+],
+[
+ "896",
+468.7632665 
+],
+[
+ "897",
+468.2925134 
+],
+[
+ "898",
+467.997567 
+],
+[
+ "899",
+467.6650774 
+],
+[
+ "900",
+466.7405872 
+],
+[
+ "901",
+466.4050468 
+],
+[
+ "902",
+466.1239187 
+],
+[
+ "903",
+465.9774673 
+],
+[
+ "904",
+465.5676955 
+],
+[
+ "905",
+464.5944468 
+],
+[
+ "906",
+464.5131878 
+],
+[
+ "907",
+463.8993767 
+],
+[
+ "908",
+463.2903658 
+],
+[
+ "909",
+462.828541 
+],
+[
+ "910",
+462.6376416 
+],
+[
+ "911",
+460.8687449 
+],
+[
+ "912",
+460.5935344 
+],
+[
+ "913",
+460.4032964 
+],
+[
+ "914",
+459.9112979 
+],
+[
+ "915",
+459.0485978 
+],
+[
+ "916",
+458.3149947 
+],
+[
+ "917",
+458.1176275 
+],
+[
+ "918",
+458.0131002 
+],
+[
+ "919",
+457.7126665 
+],
+[
+ "920",
+457.630776 
+],
+[
+ "921",
+456.9842475 
+],
+[
+ "922",
+456.9015211 
+],
+[
+ "923",
+456.0054824 
+],
+[
+ "924",
+455.7196545 
+],
+[
+ "925",
+454.9736256 
+],
+[
+ "926",
+454.4477869 
+],
+[
+ "927",
+453.7862933 
+],
+[
+ "928",
+453.4113316 
+],
+[
+ "929",
+452.6059546 
+],
+[
+ "930",
+451.3690286 
+],
+[
+ "931",
+451.3318766 
+],
+[
+ "932",
+450.9090817 
+],
+[
+ "933",
+450.737174 
+],
+[
+ "934",
+450.66898 
+],
+[
+ "935",
+449.7482372 
+],
+[
+ "936",
+449.1958242 
+],
+[
+ "937",
+449.0002471 
+],
+[
+ "938",
+448.9253836 
+],
+[
+ "939",
+448.885286 
+],
+[
+ "940",
+448.4379197 
+],
+[
+ "941",
+448.3402885 
+],
+[
+ "942",
+445.8090745 
+],
+[
+ "943",
+445.666916 
+],
+[
+ "944",
+444.8539086 
+],
+[
+ "945",
+444.1021174 
+],
+[
+ "946",
+443.6044181 
+],
+[
+ "947",
+442.6849896 
+],
+[
+ "948",
+442.4869048 
+],
+[
+ "949",
+441.291287 
+],
+[
+ "950",
+441.1637039 
+],
+[
+ "951",
+440.9701148 
+],
+[
+ "952",
+440.9614496 
+],
+[
+ "953",
+440.3714341 
+],
+[
+ "954",
+439.8749822 
+],
+[
+ "955",
+439.8315504 
+],
+[
+ "956",
+439.6186108 
+],
+[
+ "957",
+439.3848443 
+],
+[
+ "958",
+439.3034863 
+],
+[
+ "959",
+438.4769093 
+],
+[
+ "960",
+438.3545674 
+],
+[
+ "961",
+437.3666134 
+],
+[
+ "962",
+437.2527873 
+],
+[
+ "963",
+437.2241988 
+],
+[
+ "964",
+437.1842643 
+],
+[
+ "965",
+436.1203962 
+],
+[
+ "966",
+434.8769941 
+],
+[
+ "967",
+434.2393665 
+],
+[
+ "968",
+433.719296 
+],
+[
+ "969",
+432.9153316 
+],
+[
+ "970",
+432.7216195 
+],
+[
+ "971",
+431.0982241 
+],
+[
+ "972",
+430.9381355 
+],
+[
+ "973",
+430.8505607 
+],
+[
+ "974",
+429.7949255 
+],
+[
+ "975",
+429.0780606 
+],
+[
+ "976",
+428.6844862 
+],
+[
+ "977",
+428.5749935 
+],
+[
+ "978",
+428.4868726 
+],
+[
+ "979",
+428.0536447 
+],
+[
+ "980",
+427.9145252 
+],
+[
+ "981",
+427.7201821 
+],
+[
+ "982",
+427.5080017 
+],
+[
+ "983",
+427.0386399 
+],
+[
+ "984",
+426.8807256 
+],
+[
+ "985",
+426.3414125 
+],
+[
+ "986",
+426.2944991 
+],
+[
+ "987",
+425.211712 
+],
+[
+ "988",
+424.2749602 
+],
+[
+ "989",
+423.6555204 
+],
+[
+ "990",
+423.6024079 
+],
+[
+ "991",
+423.0251804 
+],
+[
+ "992",
+422.5658852 
+],
+[
+ "993",
+422.5155047 
+],
+[
+ "994",
+422.0600626 
+],
+[
+ "995",
+421.8897301 
+],
+[
+ "996",
+421.7647008 
+],
+[
+ "997",
+421.4415736 
+],
+[
+ "998",
+421.2991811 
+],
+[
+ "999",
+421.1612571 
+],
+[
+ "1000",
+420.6813968 
+],
+[
+ "1001",
+420.0821348 
+],
+[
+ "1002",
+419.9928571 
+],
+[
+ "1003",
+419.9315325 
+],
+[
+ "1004",
+419.9235567 
+],
+[
+ "1005",
+418.9892242 
+],
+[
+ "1006",
+418.6979818 
+],
+[
+ "1007",
+418.5215555 
+],
+[
+ "1008",
+418.4627826 
+],
+[
+ "1009",
+417.9401871 
+],
+[
+ "1010",
+417.7630908 
+],
+[
+ "1011",
+417.5428122 
+],
+[
+ "1012",
+415.7054245 
+],
+[
+ "1013",
+415.1872526 
+],
+[
+ "1014",
+413.3340054 
+],
+[
+ "1015",
+413.1586666 
+],
+[
+ "1016",
+413.0656183 
+],
+[
+ "1017",
+412.8559071 
+],
+[
+ "1018",
+412.3857418 
+],
+[
+ "1019",
+412.1272355 
+],
+[
+ "1020",
+411.8888009 
+],
+[
+ "1021",
+410.952552 
+],
+[
+ "1022",
+410.6200051 
+],
+[
+ "1023",
+410.0707256 
+],
+[
+ "1024",
+409.7723674 
+],
+[
+ "1025",
+408.4758346 
+],
+[
+ "1026",
+408.4550207 
+],
+[
+ "1027",
+408.2486987 
+],
+[
+ "1028",
+408.1452133 
+],
+[
+ "1029",
+407.6983439 
+],
+[
+ "1030",
+407.4571897 
+],
+[
+ "1031",
+407.1744098 
+],
+[
+ "1032",
+406.5857843 
+],
+[
+ "1033",
+406.2851362 
+],
+[
+ "1034",
+405.6895365 
+],
+[
+ "1035",
+405.381302 
+],
+[
+ "1036",
+405.137611 
+],
+[
+ "1037",
+405.1333114 
+],
+[
+ "1038",
+405.076536 
+],
+[
+ "1039",
+405.0210299 
+],
+[
+ "1040",
+404.1064216 
+],
+[
+ "1041",
+404.0173264 
+],
+[
+ "1042",
+403.9554431 
+],
+[
+ "1043",
+403.8564101 
+],
+[
+ "1044",
+403.8069553 
+],
+[
+ "1045",
+403.2197301 
+],
+[
+ "1046",
+403.0408456 
+],
+[
+ "1047",
+402.7542675 
+],
+[
+ "1048",
+402.7157807 
+],
+[
+ "1049",
+402.5621195 
+],
+[
+ "1050",
+402.5444075 
+],
+[
+ "1051",
+402.0307064 
+],
+[
+ "1052",
+401.7496063 
+],
+[
+ "1053",
+400.3960539 
+],
+[
+ "1054",
+399.9101597 
+],
+[
+ "1055",
+399.8262122 
+],
+[
+ "1056",
+399.5234661 
+],
+[
+ "1057",
+399.3131603 
+],
+[
+ "1058",
+398.5586531 
+],
+[
+ "1059",
+398.1489633 
+],
+[
+ "1060",
+397.9032546 
+],
+[
+ "1061",
+397.821568 
+],
+[
+ "1062",
+397.7599779 
+],
+[
+ "1063",
+397.5914989 
+],
+[
+ "1064",
+396.9571765 
+],
+[
+ "1065",
+396.4618519 
+],
+[
+ "1066",
+396.3142692 
+],
+[
+ "1067",
+396.2588942 
+],
+[
+ "1068",
+395.7122851 
+],
+[
+ "1069",
+395.4769273 
+],
+[
+ "1070",
+394.8627676 
+],
+[
+ "1071",
+394.2533034 
+],
+[
+ "1072",
+393.5099977 
+],
+[
+ "1073",
+393.3713258 
+],
+[
+ "1074",
+393.1093995 
+],
+[
+ "1075",
+392.3276692 
+],
+[
+ "1076",
+391.9719378 
+],
+[
+ "1077",
+391.3728209 
+],
+[
+ "1078",
+391.2630441 
+],
+[
+ "1079",
+391.2481726 
+],
+[
+ "1080",
+390.6065836 
+],
+[
+ "1081",
+390.5376649 
+],
+[
+ "1082",
+389.4277853 
+],
+[
+ "1083",
+389.146432 
+],
+[
+ "1084",
+388.8276549 
+],
+[
+ "1085",
+388.4982449 
+],
+[
+ "1086",
+388.3786812 
+],
+[
+ "1087",
+388.0500718 
+],
+[
+ "1088",
+387.6751217 
+],
+[
+ "1089",
+387.2212038 
+],
+[
+ "1090",
+387.1743793 
+],
+[
+ "1091",
+386.6089997 
+],
+[
+ "1092",
+386.6010566 
+],
+[
+ "1093",
+386.5747017 
+],
+[
+ "1094",
+386.01241 
+],
+[
+ "1095",
+385.7706573 
+],
+[
+ "1096",
+385.7135817 
+],
+[
+ "1097",
+385.3818147 
+],
+[
+ "1098",
+384.7427996 
+],
+[
+ "1099",
+384.7066494 
+],
+[
+ "1100",
+383.907541 
+],
+[
+ "1101",
+383.6000932 
+],
+[
+ "1102",
+383.1183737 
+],
+[
+ "1103",
+381.9842929 
+],
+[
+ "1104",
+381.8653829 
+],
+[
+ "1105",
+381.1749836 
+],
+[
+ "1106",
+380.6284277 
+],
+[
+ "1107",
+380.620546 
+],
+[
+ "1108",
+380.5008116 
+],
+[
+ "1109",
+380.3248611 
+],
+[
+ "1110",
+380.2853474 
+],
+[
+ "1111",
+380.0078947 
+],
+[
+ "1112",
+379.1005237 
+],
+[
+ "1113",
+379.0449476 
+],
+[
+ "1114",
+379.0247508 
+],
+[
+ "1115",
+378.9546002 
+],
+[
+ "1116",
+378.9247946 
+],
+[
+ "1117",
+378.8302556 
+],
+[
+ "1118",
+378.5947702 
+],
+[
+ "1119",
+378.2869281 
+],
+[
+ "1120",
+378.1124171 
+],
+[
+ "1121",
+377.2939678 
+],
+[
+ "1122",
+377.0238719 
+],
+[
+ "1123",
+376.9509252 
+],
+[
+ "1124",
+376.8727178 
+],
+[
+ "1125",
+376.1768201 
+],
+[
+ "1126",
+375.7286255 
+],
+[
+ "1127",
+375.5236344 
+],
+[
+ "1128",
+375.5036618 
+],
+[
+ "1129",
+375.1908605 
+],
+[
+ "1130",
+375.013897 
+],
+[
+ "1131",
+374.9764135 
+],
+[
+ "1132",
+374.3354111 
+],
+[
+ "1133",
+373.8433022 
+],
+[
+ "1134",
+373.0817605 
+],
+[
+ "1135",
+372.1275413 
+],
+[
+ "1136",
+372.0967616 
+],
+[
+ "1137",
+371.8461683 
+],
+[
+ "1138",
+370.2157342 
+],
+[
+ "1139",
+370.0405383 
+],
+[
+ "1140",
+369.8094104 
+],
+[
+ "1141",
+369.2964556 
+],
+[
+ "1142",
+369.1381855 
+],
+[
+ "1143",
+369.0108143 
+],
+[
+ "1144",
+368.6936398 
+],
+[
+ "1145",
+368.6295111 
+],
+[
+ "1146",
+368.6190445 
+],
+[
+ "1147",
+368.1453517 
+],
+[
+ "1148",
+367.9402125 
+],
+[
+ "1149",
+367.8932007 
+],
+[
+ "1150",
+367.6655556 
+],
+[
+ "1151",
+367.4846936 
+],
+[
+ "1152",
+367.3518547 
+],
+[
+ "1153",
+367.0994416 
+],
+[
+ "1154",
+367.0734024 
+],
+[
+ "1155",
+366.6522698 
+],
+[
+ "1156",
+366.3641035 
+],
+[
+ "1157",
+366.2612359 
+],
+[
+ "1158",
+365.9450263 
+],
+[
+ "1159",
+365.6993301 
+],
+[
+ "1160",
+365.6498138 
+],
+[
+ "1161",
+365.247861 
+],
+[
+ "1162",
+365.2355404 
+],
+[
+ "1163",
+365.1022627 
+],
+[
+ "1164",
+364.8516642 
+],
+[
+ "1165",
+364.473593 
+],
+[
+ "1166",
+364.3473617 
+],
+[
+ "1167",
+364.1236054 
+],
+[
+ "1168",
+363.969779 
+],
+[
+ "1169",
+363.5560744 
+],
+[
+ "1170",
+362.9214791 
+],
+[
+ "1171",
+362.763008 
+],
+[
+ "1172",
+362.3994123 
+],
+[
+ "1173",
+360.4094893 
+],
+[
+ "1174",
+359.9811675 
+],
+[
+ "1175",
+358.938671 
+],
+[
+ "1176",
+358.6139986 
+],
+[
+ "1177",
+358.5889011 
+],
+[
+ "1178",
+358.5331226 
+],
+[
+ "1179",
+357.3022867 
+],
+[
+ "1180",
+357.2447292 
+],
+[
+ "1181",
+357.0674157 
+],
+[
+ "1182",
+356.8318932 
+],
+[
+ "1183",
+356.2107132 
+],
+[
+ "1184",
+355.3955543 
+],
+[
+ "1185",
+355.3269244 
+],
+[
+ "1186",
+354.9957746 
+],
+[
+ "1187",
+353.8121255 
+],
+[
+ "1188",
+353.6382332 
+],
+[
+ "1189",
+353.5067185 
+],
+[
+ "1190",
+353.3793995 
+],
+[
+ "1191",
+353.3466647 
+],
+[
+ "1192",
+353.2237251 
+],
+[
+ "1193",
+352.5494779 
+],
+[
+ "1194",
+351.3260594 
+],
+[
+ "1195",
+350.9729334 
+],
+[
+ "1196",
+350.629434 
+],
+[
+ "1197",
+350.3169993 
+],
+[
+ "1198",
+349.9328507 
+],
+[
+ "1199",
+349.3265206 
+],
+[
+ "1200",
+349.1876286 
+],
+[
+ "1201",
+348.7751098 
+],
+[
+ "1202",
+348.5500199 
+],
+[
+ "1203",
+348.1015623 
+],
+[
+ "1204",
+348.0431008 
+],
+[
+ "1205",
+347.7556613 
+],
+[
+ "1206",
+347.7170151 
+],
+[
+ "1207",
+347.6247977 
+],
+[
+ "1208",
+347.2531865 
+],
+[
+ "1209",
+346.9480906 
+],
+[
+ "1210",
+346.93227 
+],
+[
+ "1211",
+346.0780259 
+],
+[
+ "1212",
+345.4072882 
+],
+[
+ "1213",
+345.0244101 
+],
+[
+ "1214",
+344.9275286 
+],
+[
+ "1215",
+344.8082879 
+],
+[
+ "1216",
+344.7303294 
+],
+[
+ "1217",
+343.7106341 
+],
+[
+ "1218",
+343.6715974 
+],
+[
+ "1219",
+342.9967149 
+],
+[
+ "1220",
+342.8848203 
+],
+[
+ "1221",
+342.8104432 
+],
+[
+ "1222",
+342.6280782 
+],
+[
+ "1223",
+342.2718218 
+],
+[
+ "1224",
+342.0672449 
+],
+[
+ "1225",
+341.758985 
+],
+[
+ "1226",
+341.3766249 
+],
+[
+ "1227",
+340.8046929 
+],
+[
+ "1228",
+340.5980035 
+],
+[
+ "1229",
+340.3982961 
+],
+[
+ "1230",
+340.2896559 
+],
+[
+ "1231",
+340.1034498 
+],
+[
+ "1232",
+340.0999312 
+],
+[
+ "1233",
+339.5815173 
+],
+[
+ "1234",
+339.0014749 
+],
+[
+ "1235",
+338.7093149 
+],
+[
+ "1236",
+338.5650655 
+],
+[
+ "1237",
+338.5114474 
+],
+[
+ "1238",
+338.0798722 
+],
+[
+ "1239",
+337.7202985 
+],
+[
+ "1240",
+337.4818514 
+],
+[
+ "1241",
+337.3810902 
+],
+[
+ "1242",
+336.5575731 
+],
+[
+ "1243",
+336.213853 
+],
+[
+ "1244",
+335.9485713 
+],
+[
+ "1245",
+335.6403052 
+],
+[
+ "1246",
+335.2092791 
+],
+[
+ "1247",
+335.0104476 
+],
+[
+ "1248",
+334.9148425 
+],
+[
+ "1249",
+334.7921139 
+],
+[
+ "1250",
+334.3727942 
+],
+[
+ "1251",
+333.0810712 
+],
+[
+ "1252",
+331.9781781 
+],
+[
+ "1253",
+331.7197612 
+],
+[
+ "1254",
+330.0499962 
+],
+[
+ "1255",
+329.8090357 
+],
+[
+ "1256",
+329.3365976 
+],
+[
+ "1257",
+329.3187298 
+],
+[
+ "1258",
+329.2949894 
+],
+[
+ "1259",
+329.2696712 
+],
+[
+ "1260",
+328.7446161 
+],
+[
+ "1261",
+327.1645226 
+],
+[
+ "1262",
+327.0768059 
+],
+[
+ "1263",
+326.8719594 
+],
+[
+ "1264",
+326.8302312 
+],
+[
+ "1265",
+326.7374261 
+],
+[
+ "1266",
+326.583833 
+],
+[
+ "1267",
+325.861934 
+],
+[
+ "1268",
+324.7106404 
+],
+[
+ "1269",
+324.319805 
+],
+[
+ "1270",
+324.0287491 
+],
+[
+ "1271",
+323.9496955 
+],
+[
+ "1272",
+323.5957513 
+],
+[
+ "1273",
+323.0820329 
+],
+[
+ "1274",
+322.6153119 
+],
+[
+ "1275",
+322.4081264 
+],
+[
+ "1276",
+322.3746593 
+],
+[
+ "1277",
+322.3617592 
+],
+[
+ "1278",
+322.036331 
+],
+[
+ "1279",
+321.4265561 
+],
+[
+ "1280",
+321.0436107 
+],
+[
+ "1281",
+320.4680641 
+],
+[
+ "1282",
+320.3310787 
+],
+[
+ "1283",
+320.0239035 
+],
+[
+ "1284",
+319.6889113 
+],
+[
+ "1285",
+319.5575066 
+],
+[
+ "1286",
+317.0473151 
+],
+[
+ "1287",
+316.5626158 
+],
+[
+ "1288",
+316.5511518 
+],
+[
+ "1289",
+316.5463186 
+],
+[
+ "1290",
+316.4249963 
+],
+[
+ "1291",
+316.4095447 
+],
+[
+ "1292",
+315.7308981 
+],
+[
+ "1293",
+315.5093963 
+],
+[
+ "1294",
+314.6428823 
+],
+[
+ "1295",
+314.3631782 
+],
+[
+ "1296",
+314.2427797 
+],
+[
+ "1297",
+314.2339893 
+],
+[
+ "1298",
+313.9208698 
+],
+[
+ "1299",
+313.3716302 
+],
+[
+ "1300",
+313.2877869 
+],
+[
+ "1301",
+312.8450095 
+],
+[
+ "1302",
+312.7379094 
+],
+[
+ "1303",
+312.2611087 
+],
+[
+ "1304",
+311.7498998 
+],
+[
+ "1305",
+311.5461443 
+],
+[
+ "1306",
+311.3818306 
+],
+[
+ "1307",
+311.2332534 
+],
+[
+ "1308",
+311.1337332 
+],
+[
+ "1309",
+311.0916238 
+],
+[
+ "1310",
+310.6074693 
+],
+[
+ "1311",
+310.5430727 
+],
+[
+ "1312",
+310.1498833 
+],
+[
+ "1313",
+309.7550154 
+],
+[
+ "1314",
+309.7083641 
+],
+[
+ "1315",
+309.5004747 
+],
+[
+ "1316",
+309.1407446 
+],
+[
+ "1317",
+308.7766183 
+],
+[
+ "1318",
+308.6376571 
+],
+[
+ "1319",
+308.6081658 
+],
+[
+ "1320",
+308.5028363 
+],
+[
+ "1321",
+308.0321249 
+],
+[
+ "1322",
+307.7944643 
+],
+[
+ "1323",
+306.6773549 
+],
+[
+ "1324",
+306.5273234 
+],
+[
+ "1325",
+305.8681313 
+],
+[
+ "1326",
+305.2507166 
+],
+[
+ "1327",
+305.1776899 
+],
+[
+ "1328",
+305.0081966 
+],
+[
+ "1329",
+304.9557345 
+],
+[
+ "1330",
+304.8770244 
+],
+[
+ "1331",
+304.3287696 
+],
+[
+ "1332",
+303.0214514 
+],
+[
+ "1333",
+302.7767704 
+],
+[
+ "1334",
+302.5888299 
+],
+[
+ "1335",
+301.9867547 
+],
+[
+ "1336",
+301.9784761 
+],
+[
+ "1337",
+301.8299118 
+],
+[
+ "1338",
+301.1195776 
+],
+[
+ "1339",
+300.9455962 
+],
+[
+ "1340",
+300.4573519 
+],
+[
+ "1341",
+300.2598874 
+],
+[
+ "1342",
+299.7532318 
+],
+[
+ "1343",
+299.4645221 
+],
+[
+ "1344",
+299.379358 
+],
+[
+ "1345",
+299.0535069 
+],
+[
+ "1346",
+298.5873974 
+],
+[
+ "1347",
+298.5062813 
+],
+[
+ "1348",
+298.2588575 
+],
+[
+ "1349",
+298.107982 
+],
+[
+ "1350",
+297.8976334 
+],
+[
+ "1351",
+297.8726503 
+],
+[
+ "1352",
+297.385272 
+],
+[
+ "1353",
+297.3617326 
+],
+[
+ "1354",
+296.7204071 
+],
+[
+ "1355",
+296.4422372 
+],
+[
+ "1356",
+296.3207721 
+],
+[
+ "1357",
+295.969593 
+],
+[
+ "1358",
+295.5554094 
+],
+[
+ "1359",
+295.4555804 
+],
+[
+ "1360",
+295.179609 
+],
+[
+ "1361",
+294.7466566 
+],
+[
+ "1362",
+294.5097621 
+],
+[
+ "1363",
+294.4909591 
+],
+[
+ "1364",
+294.2455284 
+],
+[
+ "1365",
+293.7686164 
+],
+[
+ "1366",
+293.7447872 
+],
+[
+ "1367",
+292.8771073 
+],
+[
+ "1368",
+292.3747595 
+],
+[
+ "1369",
+292.3294155 
+],
+[
+ "1370",
+292.0108541 
+],
+[
+ "1371",
+291.7161004 
+],
+[
+ "1372",
+290.774827 
+],
+[
+ "1373",
+290.7180765 
+],
+[
+ "1374",
+290.616728 
+],
+[
+ "1375",
+290.4995697 
+],
+[
+ "1376",
+290.2153693 
+],
+[
+ "1377",
+290.1344516 
+],
+[
+ "1378",
+290.1051266 
+],
+[
+ "1379",
+290.0147443 
+],
+[
+ "1380",
+289.3803725 
+],
+[
+ "1381",
+289.3717332 
+],
+[
+ "1382",
+289.3475419 
+],
+[
+ "1383",
+289.217698 
+],
+[
+ "1384",
+289.0619624 
+],
+[
+ "1385",
+288.9234348 
+],
+[
+ "1386",
+288.7213189 
+],
+[
+ "1387",
+288.5619518 
+],
+[
+ "1388",
+288.1926439 
+],
+[
+ "1389",
+288.1850876 
+],
+[
+ "1390",
+287.2099006 
+],
+[
+ "1391",
+287.113098 
+],
+[
+ "1392",
+286.6423994 
+],
+[
+ "1393",
+286.2837124 
+],
+[
+ "1394",
+285.6082617 
+],
+[
+ "1395",
+285.5437351 
+],
+[
+ "1396",
+284.4335301 
+],
+[
+ "1397",
+283.9542217 
+],
+[
+ "1398",
+283.4695751 
+],
+[
+ "1399",
+283.1642633 
+],
+[
+ "1400",
+283.0653635 
+],
+[
+ "1401",
+283.0212006 
+],
+[
+ "1402",
+282.5855304 
+],
+[
+ "1403",
+282.1028181 
+],
+[
+ "1404",
+280.7248814 
+],
+[
+ "1405",
+280.0257284 
+],
+[
+ "1406",
+279.5384105 
+],
+[
+ "1407",
+278.980286 
+],
+[
+ "1408",
+278.8296971 
+],
+[
+ "1409",
+278.4671168 
+],
+[
+ "1410",
+278.273247 
+],
+[
+ "1411",
+278.234501 
+],
+[
+ "1412",
+278.2211351 
+],
+[
+ "1413",
+277.9568312 
+],
+[
+ "1414",
+277.8380823 
+],
+[
+ "1415",
+277.1309638 
+],
+[
+ "1416",
+276.9887183 
+],
+[
+ "1417",
+276.3530351 
+],
+[
+ "1418",
+275.8369083 
+],
+[
+ "1419",
+275.6634406 
+],
+[
+ "1420",
+275.4269413 
+],
+[
+ "1421",
+275.0601353 
+],
+[
+ "1422",
+274.970426 
+],
+[
+ "1423",
+274.5997087 
+],
+[
+ "1424",
+273.4685741 
+],
+[
+ "1425",
+273.4069814 
+],
+[
+ "1426",
+273.3182162 
+],
+[
+ "1427",
+272.5805481 
+],
+[
+ "1428",
+272.5639556 
+],
+[
+ "1429",
+272.3710704 
+],
+[
+ "1430",
+271.5306674 
+],
+[
+ "1431",
+271.4163655 
+],
+[
+ "1432",
+271.2194683 
+],
+[
+ "1433",
+271.1789077 
+],
+[
+ "1434",
+270.7221218 
+],
+[
+ "1435",
+270.0444408 
+],
+[
+ "1436",
+269.9648125 
+],
+[
+ "1437",
+269.4568611 
+],
+[
+ "1438",
+269.3640659 
+],
+[
+ "1439",
+269.0793745 
+],
+[
+ "1440",
+268.5661175 
+],
+[
+ "1441",
+268.5423616 
+],
+[
+ "1442",
+268.2386997 
+],
+[
+ "1443",
+268.1255111 
+],
+[
+ "1444",
+267.708797 
+],
+[
+ "1445",
+267.4533123 
+],
+[
+ "1446",
+267.33898 
+],
+[
+ "1447",
+267.2115267 
+],
+[
+ "1448",
+266.5520587 
+],
+[
+ "1449",
+265.904911 
+],
+[
+ "1450",
+265.6256765 
+],
+[
+ "1451",
+265.5977834 
+],
+[
+ "1452",
+265.1243636 
+],
+[
+ "1453",
+264.9811314 
+],
+[
+ "1454",
+264.4825209 
+],
+[
+ "1455",
+264.1666141 
+],
+[
+ "1456",
+264.0246201 
+],
+[
+ "1457",
+263.9431757 
+],
+[
+ "1458",
+263.6399059 
+],
+[
+ "1459",
+263.1254454 
+],
+[
+ "1460",
+262.7907913 
+],
+[
+ "1461",
+262.4614257 
+],
+[
+ "1462",
+262.3566275 
+],
+[
+ "1463",
+262.3072405 
+],
+[
+ "1464",
+262.1714781 
+],
+[
+ "1465",
+261.8854712 
+],
+[
+ "1466",
+261.8129103 
+],
+[
+ "1467",
+261.4398617 
+],
+[
+ "1468",
+260.9291091 
+],
+[
+ "1469",
+260.7876753 
+],
+[
+ "1470",
+260.5903984 
+],
+[
+ "1471",
+260.430413 
+],
+[
+ "1472",
+260.1019031 
+],
+[
+ "1473",
+259.9596122 
+],
+[
+ "1474",
+259.8459936 
+],
+[
+ "1475",
+259.8133946 
+],
+[
+ "1476",
+259.7910331 
+],
+[
+ "1477",
+259.3028776 
+],
+[
+ "1478",
+259.1833328 
+],
+[
+ "1479",
+259.0945773 
+],
+[
+ "1480",
+259.0819984 
+],
+[
+ "1481",
+259.0482581 
+],
+[
+ "1482",
+258.6851368 
+],
+[
+ "1483",
+258.2401983 
+],
+[
+ "1484",
+257.9399155 
+],
+[
+ "1485",
+257.3688693 
+],
+[
+ "1486",
+257.3033229 
+],
+[
+ "1487",
+256.8462575 
+],
+[
+ "1488",
+256.6256821 
+],
+[
+ "1489",
+256.5707009 
+],
+[
+ "1490",
+256.1773546 
+],
+[
+ "1491",
+255.9453067 
+],
+[
+ "1492",
+255.3918558 
+],
+[
+ "1493",
+255.1842472 
+],
+[
+ "1494",
+254.5643337 
+],
+[
+ "1495",
+254.5309411 
+],
+[
+ "1496",
+253.7239582 
+],
+[
+ "1497",
+253.3219568 
+],
+[
+ "1498",
+253.1996121 
+],
+[
+ "1499",
+252.6598504 
+],
+[
+ "1500",
+252.6400602 
+],
+[
+ "1501",
+252.6199326 
+],
+[
+ "1502",
+252.4681312 
+],
+[
+ "1503",
+252.2914981 
+],
+[
+ "1504",
+252.2900037 
+],
+[
+ "1505",
+252.2829375 
+],
+[
+ "1506",
+252.2003172 
+],
+[
+ "1507",
+250.896393 
+],
+[
+ "1508",
+250.6265551 
+],
+[
+ "1509",
+250.6112527 
+],
+[
+ "1510",
+250.5773334 
+],
+[
+ "1511",
+250.0119997 
+],
+[
+ "1512",
+249.7458708 
+],
+[
+ "1513",
+249.7376708 
+],
+[
+ "1514",
+249.6076922 
+],
+[
+ "1515",
+249.4516902 
+],
+[
+ "1516",
+248.7136189 
+],
+[
+ "1517",
+248.2156321 
+],
+[
+ "1518",
+247.8447094 
+],
+[
+ "1519",
+247.6913402 
+],
+[
+ "1520",
+247.2373078 
+],
+[
+ "1521",
+247.1178008 
+],
+[
+ "1522",
+246.9169901 
+],
+[
+ "1523",
+246.4360605 
+],
+[
+ "1524",
+246.1789153 
+],
+[
+ "1525",
+246.1417576 
+],
+[
+ "1526",
+246.1239525 
+],
+[
+ "1527",
+245.609388 
+],
+[
+ "1528",
+245.525966 
+],
+[
+ "1529",
+244.9857139 
+],
+[
+ "1530",
+244.848933 
+],
+[
+ "1531",
+243.2820303 
+],
+[
+ "1532",
+243.2118418 
+],
+[
+ "1533",
+243.0555492 
+],
+[
+ "1534",
+242.9795521 
+],
+[
+ "1535",
+242.8785705 
+],
+[
+ "1536",
+242.8662183 
+],
+[
+ "1537",
+242.8147442 
+],
+[
+ "1538",
+242.5356486 
+],
+[
+ "1539",
+242.0747307 
+],
+[
+ "1540",
+241.8334085 
+],
+[
+ "1541",
+241.6443668 
+],
+[
+ "1542",
+241.516045 
+],
+[
+ "1543",
+241.5139748 
+],
+[
+ "1544",
+241.2737035 
+],
+[
+ "1545",
+241.0580843 
+],
+[
+ "1546",
+240.8817137 
+],
+[
+ "1547",
+240.6782084 
+],
+[
+ "1548",
+240.4163056 
+],
+[
+ "1549",
+240.3745337 
+],
+[
+ "1550",
+240.170518 
+],
+[
+ "1551",
+240.0687951 
+],
+[
+ "1552",
+239.8562069 
+],
+[
+ "1553",
+237.5773558 
+],
+[
+ "1554",
+237.5238319 
+],
+[
+ "1555",
+236.9514718 
+],
+[
+ "1556",
+236.8964024 
+],
+[
+ "1557",
+236.1334369 
+],
+[
+ "1558",
+235.9212593 
+],
+[
+ "1559",
+235.6162134 
+],
+[
+ "1560",
+235.3295562 
+],
+[
+ "1561",
+235.2849336 
+],
+[
+ "1562",
+235.2403027 
+],
+[
+ "1563",
+234.4397577 
+],
+[
+ "1564",
+234.1196275 
+],
+[
+ "1565",
+233.6222632 
+],
+[
+ "1566",
+233.0064377 
+],
+[
+ "1567",
+232.7122687 
+],
+[
+ "1568",
+231.8447757 
+],
+[
+ "1569",
+231.6980794 
+],
+[
+ "1570",
+231.4352083 
+],
+[
+ "1571",
+231.4307385 
+],
+[
+ "1572",
+230.984848 
+],
+[
+ "1573",
+230.9588708 
+],
+[
+ "1574",
+230.8441032 
+],
+[
+ "1575",
+230.7986135 
+],
+[
+ "1576",
+230.7510277 
+],
+[
+ "1577",
+230.6326868 
+],
+[
+ "1578",
+230.3258561 
+],
+[
+ "1579",
+230.2455211 
+],
+[
+ "1580",
+229.7694497 
+],
+[
+ "1581",
+229.4079336 
+],
+[
+ "1582",
+229.2493306 
+],
+[
+ "1583",
+229.1440595 
+],
+[
+ "1584",
+228.9126471 
+],
+[
+ "1585",
+228.1620304 
+],
+[
+ "1586",
+228.1381161 
+],
+[
+ "1587",
+227.7241295 
+],
+[
+ "1588",
+227.6312808 
+],
+[
+ "1589",
+227.0528573 
+],
+[
+ "1590",
+226.4199638 
+],
+[
+ "1591",
+225.871645 
+],
+[
+ "1592",
+225.2354324 
+],
+[
+ "1593",
+225.0222965 
+],
+[
+ "1594",
+224.5417556 
+],
+[
+ "1595",
+224.3524014 
+],
+[
+ "1596",
+224.1401175 
+],
+[
+ "1597",
+223.9062304 
+],
+[
+ "1598",
+223.6570639 
+],
+[
+ "1599",
+223.5173371 
+],
+[
+ "1600",
+222.8272874 
+],
+[
+ "1601",
+222.7677457 
+],
+[
+ "1602",
+222.5061797 
+],
+[
+ "1603",
+222.1418466 
+],
+[
+ "1604",
+222.0823368 
+],
+[
+ "1605",
+221.8084759 
+],
+[
+ "1606",
+221.524265 
+],
+[
+ "1607",
+221.4055053 
+],
+[
+ "1608",
+221.2939222 
+],
+[
+ "1609",
+220.9636386 
+],
+[
+ "1610",
+219.8180156 
+],
+[
+ "1611",
+219.020547 
+],
+[
+ "1612",
+218.9383475 
+],
+[
+ "1613",
+218.2452749 
+],
+[
+ "1614",
+218.0221856 
+],
+[
+ "1615",
+217.5109193 
+],
+[
+ "1616",
+216.725633 
+],
+[
+ "1617",
+216.5637247 
+],
+[
+ "1618",
+216.1203368 
+],
+[
+ "1619",
+215.6715154 
+],
+[
+ "1620",
+215.4135557 
+],
+[
+ "1621",
+215.3323013 
+],
+[
+ "1622",
+215.1325173 
+],
+[
+ "1623",
+215.0534817 
+],
+[
+ "1624",
+215.0327368 
+],
+[
+ "1625",
+215.0206029 
+],
+[
+ "1626",
+214.4714433 
+],
+[
+ "1627",
+214.4294756 
+],
+[
+ "1628",
+214.0350439 
+],
+[
+ "1629",
+213.9228833 
+],
+[
+ "1630",
+213.6890264 
+],
+[
+ "1631",
+213.5790252 
+],
+[
+ "1632",
+213.1115206 
+],
+[
+ "1633",
+212.3076129 
+],
+[
+ "1634",
+212.2333621 
+],
+[
+ "1635",
+212.1744565 
+],
+[
+ "1636",
+211.8608417 
+],
+[
+ "1637",
+211.7404071 
+],
+[
+ "1638",
+211.4213802 
+],
+[
+ "1639",
+211.374076 
+],
+[
+ "1640",
+211.2230658 
+],
+[
+ "1641",
+211.1513181 
+],
+[
+ "1642",
+210.0428528 
+],
+[
+ "1643",
+209.997619 
+],
+[
+ "1644",
+209.4182418 
+],
+[
+ "1645",
+209.2728058 
+],
+[
+ "1646",
+208.1585934 
+],
+[
+ "1647",
+207.7642895 
+],
+[
+ "1648",
+207.7616371 
+],
+[
+ "1649",
+207.7138943 
+],
+[
+ "1650",
+207.3454452 
+],
+[
+ "1651",
+206.8260138 
+],
+[
+ "1652",
+206.4485408 
+],
+[
+ "1653",
+206.1989331 
+],
+[
+ "1654",
+205.6890858 
+],
+[
+ "1655",
+204.7828118 
+],
+[
+ "1656",
+203.9850431 
+],
+[
+ "1657",
+203.9469916 
+],
+[
+ "1658",
+203.8970328 
+],
+[
+ "1659",
+203.8700567 
+],
+[
+ "1660",
+203.6351566 
+],
+[
+ "1661",
+203.1551132 
+],
+[
+ "1662",
+202.5857843 
+],
+[
+ "1663",
+202.5759117 
+],
+[
+ "1664",
+202.5052277 
+],
+[
+ "1665",
+201.9306812 
+],
+[
+ "1666",
+201.74241 
+],
+[
+ "1667",
+201.7370426 
+],
+[
+ "1668",
+200.9638208 
+],
+[
+ "1669",
+200.6750574 
+],
+[
+ "1670",
+200.6290109 
+],
+[
+ "1671",
+200.164932 
+],
+[
+ "1672",
+199.0628042 
+],
+[
+ "1673",
+198.3679762 
+],
+[
+ "1674",
+198.3582617 
+],
+[
+ "1675",
+198.2394059 
+],
+[
+ "1676",
+197.9949494 
+],
+[
+ "1677",
+197.2750637 
+],
+[
+ "1678",
+197.0499546 
+],
+[
+ "1679",
+196.776523 
+],
+[
+ "1680",
+196.7587355 
+],
+[
+ "1681",
+196.6392636 
+],
+[
+ "1682",
+196.5858591 
+],
+[
+ "1683",
+196.4739168 
+],
+[
+ "1684",
+196.4077392 
+],
+[
+ "1685",
+195.9234544 
+],
+[
+ "1686",
+195.8384611 
+],
+[
+ "1687",
+195.1623031 
+],
+[
+ "1688",
+195.1025371 
+],
+[
+ "1689",
+194.843527 
+],
+[
+ "1690",
+194.8024641 
+],
+[
+ "1691",
+194.3836413 
+],
+[
+ "1692",
+194.2951872 
+],
+[
+ "1693",
+194.1133689 
+],
+[
+ "1694",
+194.0820541 
+],
+[
+ "1695",
+193.9948453 
+],
+[
+ "1696",
+193.9639142 
+],
+[
+ "1697",
+193.5071058 
+],
+[
+ "1698",
+192.9372767 
+],
+[
+ "1699",
+192.6499416 
+],
+[
+ "1700",
+192.5829886 
+],
+[
+ "1701",
+192.2065434 
+],
+[
+ "1702",
+191.9166486 
+],
+[
+ "1703",
+191.8202283 
+],
+[
+ "1704",
+191.7263675 
+],
+[
+ "1705",
+191.3588745 
+],
+[
+ "1706",
+191.1177647 
+],
+[
+ "1707",
+190.7876853 
+],
+[
+ "1708",
+190.2498357 
+],
+[
+ "1709",
+190.105234 
+],
+[
+ "1710",
+189.7103055 
+],
+[
+ "1711",
+189.6712593 
+],
+[
+ "1712",
+189.4940632 
+],
+[
+ "1713",
+189.3752888 
+],
+[
+ "1714",
+189.0784535 
+],
+[
+ "1715",
+188.9420641 
+],
+[
+ "1716",
+188.8972499 
+],
+[
+ "1717",
+188.814724 
+],
+[
+ "1718",
+188.1211014 
+],
+[
+ "1719",
+187.6725872 
+],
+[
+ "1720",
+187.5926438 
+],
+[
+ "1721",
+187.4958444 
+],
+[
+ "1722",
+187.4113124 
+],
+[
+ "1723",
+187.3899677 
+],
+[
+ "1724",
+186.6243832 
+],
+[
+ "1725",
+186.3652328 
+],
+[
+ "1726",
+186.0134404 
+],
+[
+ "1727",
+185.6118192 
+],
+[
+ "1728",
+185.4777615 
+],
+[
+ "1729",
+184.3610588 
+],
+[
+ "1730",
+184.3285111 
+],
+[
+ "1731",
+184.3230859 
+],
+[
+ "1732",
+184.0950841 
+],
+[
+ "1733",
+184.008152 
+],
+[
+ "1734",
+183.7443877 
+],
+[
+ "1735",
+183.2730204 
+],
+[
+ "1736",
+183.2157198 
+],
+[
+ "1737",
+183.0573681 
+],
+[
+ "1738",
+182.9202365 
+],
+[
+ "1739",
+182.7730834 
+],
+[
+ "1740",
+182.3924341 
+],
+[
+ "1741",
+181.7085579 
+],
+[
+ "1742",
+181.4579841 
+],
+[
+ "1743",
+181.4304274 
+],
+[
+ "1744",
+181.4028666 
+],
+[
+ "1745",
+181.163312 
+],
+[
+ "1746",
+180.7761046 
+],
+[
+ "1747",
+180.7152456 
+],
+[
+ "1748",
+180.5519316 
+],
+[
+ "1749",
+179.8638374 
+],
+[
+ "1750",
+179.7492352 
+],
+[
+ "1751",
+179.5271567 
+],
+[
+ "1752",
+179.2902674 
+],
+[
+ "1753",
+178.9357427 
+],
+[
+ "1754",
+178.8341896 
+],
+[
+ "1755",
+178.6784822 
+],
+[
+ "1756",
+178.622507 
+],
+[
+ "1757",
+178.5581138 
+],
+[
+ "1758",
+177.789201 
+],
+[
+ "1759",
+177.5865986 
+],
+[
+ "1760",
+177.5339075 
+],
+[
+ "1761",
+177.4936619 
+],
+[
+ "1762",
+177.4383593 
+],
+[
+ "1763",
+177.2794404 
+],
+[
+ "1764",
+176.9011023 
+],
+[
+ "1765",
+176.3534399 
+],
+[
+ "1766",
+176.1192778 
+],
+[
+ "1767",
+176.0965644 
+],
+[
+ "1768",
+176.0646052 
+],
+[
+ "1769",
+175.7355968 
+],
+[
+ "1770",
+175.2769238 
+],
+[
+ "1771",
+175.2712184 
+],
+[
+ "1772",
+175.1799075 
+],
+[
+ "1773",
+175.071414 
+],
+[
+ "1774",
+174.470738 
+],
+[
+ "1775",
+174.4213625 
+],
+[
+ "1776",
+174.3672744 
+],
+[
+ "1777",
+174.3196873 
+],
+[
+ "1778",
+174.301463 
+],
+[
+ "1779",
+174.2614457 
+],
+[
+ "1780",
+173.7008923 
+],
+[
+ "1781",
+173.2252744 
+],
+[
+ "1782",
+173.0825861 
+],
+[
+ "1783",
+173.0549046 
+],
+[
+ "1784",
+172.6846837 
+],
+[
+ "1785",
+172.3107658 
+],
+[
+ "1786",
+172.2759414 
+],
+[
+ "1787",
+172.2498186 
+],
+[
+ "1788",
+172.0068229 
+],
+[
+ "1789",
+171.8313126 
+],
+[
+ "1790",
+171.7032324 
+],
+[
+ "1791",
+171.611688 
+],
+[
+ "1792",
+171.0380075 
+],
+[
+ "1793",
+170.1303972 
+],
+[
+ "1794",
+170 
+],
+[
+ "1795",
+169.7498159 
+],
+[
+ "1796",
+169.7163688 
+],
+[
+ "1797",
+169.7115199 
+],
+[
+ "1798",
+169.5060201 
+],
+[
+ "1799",
+168.991124 
+],
+[
+ "1800",
+167.4634288 
+],
+[
+ "1801",
+167.269244 
+],
+[
+ "1802",
+167.2034689 
+],
+[
+ "1803",
+167.1308643 
+],
+[
+ "1804",
+166.2858984 
+],
+[
+ "1805",
+166.264849 
+],
+[
+ "1806",
+165.6381599 
+],
+[
+ "1807",
+165.0817979 
+],
+[
+ "1808",
+165.0757402 
+],
+[
+ "1809",
+164.6420359 
+],
+[
+ "1810",
+164.5934385 
+],
+[
+ "1811",
+164.4962006 
+],
+[
+ "1812",
+164.4293161 
+],
+[
+ "1813",
+164.353278 
+],
+[
+ "1814",
+164.0792491 
+],
+[
+ "1815",
+163.980064 
+],
+[
+ "1816",
+163.6756509 
+],
+[
+ "1817",
+163.65207 
+],
+[
+ "1818",
+162.4994418 
+],
+[
+ "1819",
+162.3175899 
+],
+[
+ "1820",
+162.2159055 
+],
+[
+ "1821",
+161.9651909 
+],
+[
+ "1822",
+161.7096163 
+],
+[
+ "1823",
+161.1272789 
+],
+[
+ "1824",
+160.9440897 
+],
+[
+ "1825",
+160.5947094 
+],
+[
+ "1826",
+160.526682 
+],
+[
+ "1827",
+159.9843742 
+],
+[
+ "1828",
+158.7387791 
+],
+[
+ "1829",
+158.5073596 
+],
+[
+ "1830",
+157.7149327 
+],
+[
+ "1831",
+157.130519 
+],
+[
+ "1832",
+157.0480064 
+],
+[
+ "1833",
+156.9872606 
+],
+[
+ "1834",
+156.6628115 
+],
+[
+ "1835",
+156.1345574 
+],
+[
+ "1836",
+155.8300356 
+],
+[
+ "1837",
+155.7120553 
+],
+[
+ "1838",
+154.6841536 
+],
+[
+ "1839",
+154.6350542 
+],
+[
+ "1840",
+154.4994416 
+],
+[
+ "1841",
+154.4474021 
+],
+[
+ "1842",
+154.3858802 
+],
+[
+ "1843",
+154.3016526 
+],
+[
+ "1844",
+154.2530389 
+],
+[
+ "1845",
+154.0772879 
+],
+[
+ "1846",
+153.0196066 
+],
+[
+ "1847",
+152.8921188 
+],
+[
+ "1848",
+152.8528704 
+],
+[
+ "1849",
+152.5280326 
+],
+[
+ "1850",
+152.282632 
+],
+[
+ "1851",
+151.8650717 
+],
+[
+ "1852",
+151.726728 
+],
+[
+ "1853",
+149.7230777 
+],
+[
+ "1854",
+148.2025641 
+],
+[
+ "1855",
+147.6701019 
+],
+[
+ "1856",
+146.2902254 
+],
+[
+ "1857",
+146.2121746 
+],
+[
+ "1858",
+146.11297 
+],
+[
+ "1859",
+145.9109317 
+],
+[
+ "1860",
+145.7784532 
+],
+[
+ "1861",
+145.4991409 
+],
+[
+ "1862",
+145.223965 
+],
+[
+ "1863",
+144.8240312 
+],
+[
+ "1864",
+143.8817533 
+],
+[
+ "1865",
+143.2864264 
+],
+[
+ "1866",
+143.1607488 
+],
+[
+ "1867",
+142.2075947 
+],
+[
+ "1868",
+142.02404 
+],
+[
+ "1869",
+141.8055829 
+],
+[
+ "1870",
+141.0779926 
+],
+[
+ "1871",
+140.5605952 
+],
+[
+ "1872",
+140.3353127 
+],
+[
+ "1873",
+139.8391934 
+],
+[
+ "1874",
+139.7234343 
+],
+[
+ "1875",
+139.6853607 
+],
+[
+ "1876",
+139.2946517 
+],
+[
+ "1877",
+139.1581834 
+],
+[
+ "1878",
+138.9676221 
+],
+[
+ "1879",
+138.2214552 
+],
+[
+ "1880",
+137.5536259 
+],
+[
+ "1881",
+137.3098685 
+],
+[
+ "1882",
+137.1750706 
+],
+[
+ "1883",
+136.688545 
+],
+[
+ "1884",
+136.466113 
+],
+[
+ "1885",
+135.6650287 
+],
+[
+ "1886",
+135.3994092 
+],
+[
+ "1887",
+135.3991518 
+],
+[
+ "1888",
+135.2811886 
+],
+[
+ "1889",
+134.7516234 
+],
+[
+ "1890",
+134.7404913 
+],
+[
+ "1891",
+133.8282481 
+],
+[
+ "1892",
+133.7048989 
+],
+[
+ "1893",
+133.7040926 
+],
+[
+ "1894",
+133.522197 
+],
+[
+ "1895",
+133.3437412 
+],
+[
+ "1896",
+133.1915913 
+],
+[
+ "1897",
+132.872119 
+],
+[
+ "1898",
+132.8081323 
+],
+[
+ "1899",
+132.6574536 
+],
+[
+ "1900",
+132.4650897 
+],
+[
+ "1901",
+131.6964509 
+],
+[
+ "1902",
+130.9029857 
+],
+[
+ "1903",
+130.896906 
+],
+[
+ "1904",
+130.866344 
+],
+[
+ "1905",
+130.5986217 
+],
+[
+ "1906",
+130.5871357 
+],
+[
+ "1907",
+130.4530567 
+],
+[
+ "1908",
+130.3572016 
+],
+[
+ "1909",
+130.0307656 
+],
+[
+ "1910",
+129.9042274 
+],
+[
+ "1911",
+129.5492184 
+],
+[
+ "1912",
+129.5453589 
+],
+[
+ "1913",
+129.5183385 
+],
+[
+ "1914",
+129.4490927 
+],
+[
+ "1915",
+128.7594657 
+],
+[
+ "1916",
+128.2458576 
+],
+[
+ "1917",
+127.8263469 
+],
+[
+ "1918",
+127.7890361 
+],
+[
+ "1919",
+127.6597039 
+],
+[
+ "1920",
+127.6244491 
+],
+[
+ "1921",
+126.9947956 
+],
+[
+ "1922",
+126.8594986 
+],
+[
+ "1923",
+126.8463638 
+],
+[
+ "1924",
+126.7122725 
+],
+[
+ "1925",
+126.4476176 
+],
+[
+ "1926",
+126.3922466 
+],
+[
+ "1927",
+125.9761882 
+],
+[
+ "1928",
+125.9709728 
+],
+[
+ "1929",
+125.833223 
+],
+[
+ "1930",
+125.7605773 
+],
+[
+ "1931",
+124.9639948 
+],
+[
+ "1932",
+124.9412203 
+],
+[
+ "1933",
+124.7437373 
+],
+[
+ "1934",
+124.7036487 
+],
+[
+ "1935",
+123.7376256 
+],
+[
+ "1936",
+123.1054785 
+],
+[
+ "1937",
+122.9674754 
+],
+[
+ "1938",
+122.8250789 
+],
+[
+ "1939",
+122.2742818 
+],
+[
+ "1940",
+122.1433584 
+],
+[
+ "1941",
+122.1039373 
+],
+[
+ "1942",
+121.7784874 
+],
+[
+ "1943",
+121.7579566 
+],
+[
+ "1944",
+120.7435298 
+],
+[
+ "1945",
+120.5072612 
+],
+[
+ "1946",
+120.0249974 
+],
+[
+ "1947",
+119.749739 
+],
+[
+ "1948",
+118.4567432 
+],
+[
+ "1949",
+118.3089177 
+],
+[
+ "1950",
+118.2962383 
+],
+[
+ "1951",
+117.9084864 
+],
+[
+ "1952",
+117.6477794 
+],
+[
+ "1953",
+117.2945011 
+],
+[
+ "1954",
+116.9871788 
+],
+[
+ "1955",
+116.6147504 
+],
+[
+ "1956",
+116.4817582 
+],
+[
+ "1957",
+116.4216475 
+],
+[
+ "1958",
+116.4216475 
+],
+[
+ "1959",
+116.3572086 
+],
+[
+ "1960",
+115.9223878 
+],
+[
+ "1961",
+115.026084 
+],
+[
+ "1962",
+113.9071395 
+],
+[
+ "1963",
+113.369158 
+],
+[
+ "1964",
+112.6720906 
+],
+[
+ "1965",
+112.1338486 
+],
+[
+ "1966",
+111.5437134 
+],
+[
+ "1967",
+111.0305086 
+],
+[
+ "1968",
+110.5305388 
+],
+[
+ "1969",
+110.4128616 
+],
+[
+ "1970",
+110.3449138 
+],
+[
+ "1971",
+109.9590833 
+],
+[
+ "1972",
+109.8965914 
+],
+[
+ "1973",
+109.3206293 
+],
+[
+ "1974",
+109.3152738 
+],
+[
+ "1975",
+109.2840336 
+],
+[
+ "1976",
+108.5403151 
+],
+[
+ "1977",
+107.8981001 
+],
+[
+ "1978",
+107.571802 
+],
+[
+ "1979",
+107.4337005 
+],
+[
+ "1980",
+105.9716943 
+],
+[
+ "1981",
+105.4371851 
+],
+[
+ "1982",
+105.3863045 
+],
+[
+ "1983",
+105.3612832 
+],
+[
+ "1984",
+105.1617801 
+],
+[
+ "1985",
+104.7807234 
+],
+[
+ "1986",
+104.2161216 
+],
+[
+ "1987",
+103.6106221 
+],
+[
+ "1988",
+103.3537614 
+],
+[
+ "1989",
+103.0824912 
+],
+[
+ "1990",
+102.5599256 
+],
+[
+ "1991",
+101.9950979 
+],
+[
+ "1992",
+101.8135551 
+],
+[
+ "1993",
+101.4001972 
+],
+[
+ "1994",
+101.3064657 
+],
+[
+ "1995",
+101.1484058 
+],
+[
+ "1996",
+100.9504829 
+],
+[
+ "1997",
+100.4141424 
+],
+[
+ "1998",
+100.20978 
+],
+[
+ "1999",
+99.979998 
+],
+[
+ "2000",
+99.72963451 
+],
+[
+ "2001",
+99.0807733 
+],
+[
+ "2002",
+98.52918349 
+],
+[
+ "2003",
+98.46319109 
+],
+[
+ "2004",
+97.88769075 
+],
+[
+ "2005",
+96.35870485 
+],
+[
+ "2006",
+96.23408959 
+],
+[
+ "2007",
+95.91141746 
+],
+[
+ "2008",
+95.115719 
+],
+[
+ "2009",
+94.64671151 
+],
+[
+ "2010",
+94.35570995 
+],
+[
+ "2011",
+94.32010285 
+],
+[
+ "2012",
+94.13819629 
+],
+[
+ "2013",
+92.36882591 
+],
+[
+ "2014",
+92.32009532 
+],
+[
+ "2015",
+91.90212185 
+],
+[
+ "2016",
+91.76600678 
+],
+[
+ "2017",
+91.68969408 
+],
+[
+ "2018",
+91.02746838 
+],
+[
+ "2019",
+90.83501527 
+],
+[
+ "2020",
+89.32524839 
+],
+[
+ "2021",
+89.11789944 
+],
+[
+ "2022",
+88.79487067 
+],
+[
+ "2023",
+87.94523341 
+],
+[
+ "2024",
+87.93030056 
+],
+[
+ "2025",
+87.73824708 
+],
+[
+ "2026",
+87.45856162 
+],
+[
+ "2027",
+87.44140895 
+],
+[
+ "2028",
+87.00330239 
+],
+[
+ "2029",
+86.9655104 
+],
+[
+ "2030",
+86.66602564 
+],
+[
+ "2031",
+86.55943949 
+],
+[
+ "2032",
+86.15103017 
+],
+[
+ "2033",
+85.62735979 
+],
+[
+ "2034",
+84.63450833 
+],
+[
+ "2035",
+83.76753548 
+],
+[
+ "2036",
+83.73171442 
+],
+[
+ "2037",
+82.75868534 
+],
+[
+ "2038",
+82.51287326 
+],
+[
+ "2039",
+82.24962006 
+],
+[
+ "2040",
+81.92069336 
+],
+[
+ "2041",
+81.82909018 
+],
+[
+ "2042",
+81.67618992 
+],
+[
+ "2043",
+80.72174428 
+],
+[
+ "2044",
+78.93034904 
+],
+[
+ "2045",
+78.34538914 
+],
+[
+ "2046",
+78.03845206 
+],
+[
+ "2047",
+77.94228634 
+],
+[
+ "2048",
+77.62731478 
+],
+[
+ "2049",
+77.31752712 
+],
+[
+ "2050",
+76.54410493 
+],
+[
+ "2051",
+76.37551381 
+],
+[
+ "2052",
+74.64583043 
+],
+[
+ "2053",
+74.53858061 
+],
+[
+ "2054",
+74.47147105 
+],
+[
+ "2055",
+73.4487988 
+],
+[
+ "2056",
+72.77255649 
+],
+[
+ "2057",
+72.1734023 
+],
+[
+ "2058",
+72.00694411 
+],
+[
+ "2059",
+71.97121633 
+],
+[
+ "2060",
+70.63993205 
+],
+[
+ "2061",
+69.53416426 
+],
+[
+ "2062",
+68.4908753 
+],
+[
+ "2063",
+67.60177512 
+],
+[
+ "2064",
+66.49060084 
+],
+[
+ "2065",
+66.46803743 
+],
+[
+ "2066",
+65.2533524 
+],
+[
+ "2067",
+65.19202405 
+],
+[
+ "2068",
+64.83054835 
+],
+[
+ "2069",
+64.14826576 
+],
+[
+ "2070",
+63.61179117 
+],
+[
+ "2071",
+62.98412498 
+],
+[
+ "2072",
+62.66503386 
+],
+[
+ "2073",
+62.49799997 
+],
+[
+ "2074",
+60.46486583 
+],
+[
+ "2075",
+60.24948133 
+],
+[
+ "2076",
+60.08327554 
+],
+[
+ "2077",
+59.42221807 
+],
+[
+ "2078",
+59.28743543 
+],
+[
+ "2079",
+59.27056605 
+],
+[
+ "2080",
+58.84725992 
+],
+[
+ "2081",
+58.71967302 
+],
+[
+ "2082",
+56.75385449 
+],
+[
+ "2083",
+56.71860365 
+],
+[
+ "2084",
+54.95906853 
+],
+[
+ "2085",
+54.52522352 
+],
+[
+ "2086",
+54.31390246 
+],
+[
+ "2087",
+54.28627819 
+],
+[
+ "2088",
+53.30444623 
+],
+[
+ "2089",
+53.16013544 
+],
+[
+ "2090",
+51.34033436 
+],
+[
+ "2091",
+51.18593557 
+],
+[
+ "2092",
+51.09794516 
+],
+[
+ "2093",
+49.76946855 
+],
+[
+ "2094",
+49.37958526 
+],
+[
+ "2095",
+48.61069841 
+],
+[
+ "2096",
+48.14739701 
+],
+[
+ "2097",
+47.60252094 
+],
+[
+ "2098",
+46.96807426 
+],
+[
+ "2099",
+46.5832588 
+],
+[
+ "2100",
+46.20606021 
+],
+[
+ "2101",
+45.82575695 
+],
+[
+ "2102",
+43.70354677 
+],
+[
+ "2103",
+43.48562981 
+],
+[
+ "2104",
+43.37049688 
+],
+[
+ "2105",
+41.97618372 
+],
+[
+ "2106",
+41.72529209 
+],
+[
+ "2107",
+41.60144363 
+],
+[
+ "2108",
+40.58324778 
+],
+[
+ "2109",
+40.02499219 
+],
+[
+ "2110",
+39.62322551 
+],
+[
+ "2111",
+38.09199391 
+],
+[
+ "2112",
+36.81032464 
+],
+[
+ "2113",
+35.29872519 
+],
+[
+ "2114",
+34.68429039 
+],
+[
+ "2115",
+34.24908758 
+],
+[
+ "2116",
+34.11744422 
+],
+[
+ "2117",
+33.89690251 
+],
+[
+ "2118",
+33.7934905 
+],
+[
+ "2119",
+33.01514804 
+],
+[
+ "2120",
+32.37282811 
+],
+[
+ "2121",
+29.29163703 
+],
+[
+ "2122",
+28.93095228 
+],
+[
+ "2123",
+28.40774542 
+],
+[
+ "2124",
+28.03569154 
+],
+[
+ "2125",
+25.88435821 
+],
+[
+ "2126",
+24.55605832 
+],
+[
+ "2127",
+24.53568829 
+],
+[
+ "2128",
+24.51850425 
+],
+[
+ "2129",
+22.5 
+],
+[
+ "2130",
+20.34698995 
+],
+[
+ "2131",
+18.54723699 
+],
+[
+ "2132",
+15 
+],
+[
+ "2133",
+14.66666667 
+],
+[
+ "2134",
+8 
+],
+[
+ "2135",
+0 
+],
+[
+ "2136",
+0 
+],
+[
+ "2137",
+0 
+] 
+];
+data.addColumn('string','index');
+data.addColumn('number','distances');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartLineChartID8b617832c599() {
+var data = gvisDataLineChartID8b617832c599();
+var options = {};
+options["allowHtml"] = true;
+options["title"] = "Distances plot";
+options["legend"] = "right";
+options["width"] =    900;
+options["height"] =    600;
+options["hAxis"] = {title:'Number of Components', titleTextStyle:{color:'black'}};
+options["vAxes"] = [{title:'Distances'}];
+options["series"] = [{color:'green',pointSize:12, targetAxisIndex: 0}];
+
+    var chart = new google.visualization.LineChart(
+    document.getElementById('LineChartID8b617832c599')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartLineChartID8b617832c599);
+})();
+function displayChartLineChartID8b617832c599() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID8b617832c599"></script>
+ 
+<!-- divChart -->
+  
+<div id="LineChartID8b617832c599" 
+  style="width: 900; height: 600;">
+</div>
+
+
+### Defining the Market Segments
+
+Once the team has decided on the number of factors they have to profile and describe these segments in a better way. Based on the groups identified by the cluster analysis (recall that cluster analysis calculates differences/similarities of customers based on 10 attitudes that stand as proxies for the 10 identified factors) we now have to profile 5 market segments. Below we have the number of observations (i.e. the number of customers of the sample) in each market segment:
+
+<br>
+<table class='table table-striped table-hover table-bordered'>
+<caption align="top"> Size of Clusters: Boating Company </caption>
+<tr> <th>  </th> <th> Size of Cluster 1 </th> <th> Size of Cluster 2 </th> <th> Size of Cluster 3 </th> <th> Size of Cluster 4 </th> <th> Size of Cluster 5 </th>  </tr>
+  <tr> <td align="right"> 1 </td> <td align="right"> 321 </td> <td align="right"> 162 </td> <td align="right"> 981 </td> <td align="right"> 218 </td> <td align="right"> 456 </td> </tr>
+   </table>
+
+
+In a next step we can fully profile each of the 5 segments using the other variables from the survey. We can for example look at differences across groups in variables such as income, age, boat preferences, etc. and determine if those differences are significant from a statistical point of view when the data is continuous (e.g. the level income). The usual approach is to use ANOVA (or MANOVA if we want to compare multiple variables across groups at the same time).
+
+In this example most of the variables are categorical. In such cases we can look at the frequency of each of the categories of a variable for each segment group (segment profile). Each variable can be used to decscribe the segments. Ideally we find variables where segments differ a lot but it could also be the case that segments are very similar for some variables. Eg. in the table below we can see that each of the 5 segments have a similar proportion of people in each income category. Therefore, we cannot say that one segment is necessarily wealthier than the other.
+
+<br>
+
+
+
+
+
+
+
+
+

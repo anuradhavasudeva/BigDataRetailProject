@@ -21,7 +21,7 @@ local_directory <- getwd()
 cat("\n *********\n WORKING DIRECTORY IS ", local_directory, "\n PLEASE CHANGE IT IF IT IS NOT CORRECT using setwd(..) - type help(setwd) for more information \n *********")
 
 # Please ENTER the name of the file with the data used. The file should contain a matrix with one row per observation (e.g. person) and one column per attribute. THE NAME OF THIS MATRIX NEEDS TO BE ProjectData (otherwise you will need to replace the name of the ProjectData variable below with whatever your variable name is, which you can see in your Workspace window after you load your file)
-datafile_name="Boats"
+datafile_name="StoreSales"
 
 # this loads the selected data: DO NOT EDIT THIS LINE
 ProjectData <- read.csv(paste(paste(local_directory, "data", sep="/"), paste(datafile_name,"csv", sep="."), sep = "/"), sep=";", dec=",") # this contains only the matrix ProjectData
@@ -29,12 +29,12 @@ ProjectData=data.matrix(ProjectData) # make sure the data are numeric!!!! check 
 colnames(ProjectData)<-gsub("\\."," ",colnames(ProjectData))
 
 # Please ENTER a name that describes the data for this project (which will appear on the titles of the plots)
-data_name="Boating Company"
+data_name="Retail Store"
 
 #### Factor Analysis parameters
 
 # Please ENTER the number of factors to eventually use for this report
-numb_factors_used = 2
+numb_factors_used = 6
 
 # Please ENTER the rotation eventually used (e.g. "none", "varimax", "quatimax", "promax", "oblimin", "simplimax", and "cluster" - see help(principal)). Defauls is "varimax"
 rotation_used="varimax"
@@ -44,7 +44,7 @@ rotation_used="varimax"
 factor_selectionciterion = "variance"
 
 # Please ENTER the desired minumum variance explained (in case "variance" is the factor selection criterion used). 
-minimum_variance_explained = 65  # between 1 and 100
+minimum_variance_explained = 70  # between 1 and 100
 
 # Please ENTER the number of factors to use in case "manual" is the factor selection criterion used
 manual_numb_factors_used = 2
