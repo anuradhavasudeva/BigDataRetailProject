@@ -1,27 +1,24 @@
 Data Analytics Case Study: 
 ---------------------------------------------------------
-
-Data_Analytics_Case_MarketSegmentation_LuxuryGoods
+Retail Store Data Analysis
 ---------------------------------------------------------
 
-**Organization:** Boating Company
+**Industry:** Retail store in Thailand
 
-**Industry:** Boats Industry
-
-**Project Description:** Segment the market based on a market research survey
+**Project Description:** Segment the store inventory based on season
 
 **Data Description:** Survey data
 
-**Author(s):** J. Niessing and T. Evgeniou 
+**Author(s):** Big data team  
 
 **Author(s)' Affiliations:** INSEAD
 
-**Date:** January 2014 
+**Date:** February 2015 
 
 INSTRUCTIONS FOR PROJECT
 ---------------------------------------------------------
 
-(*NOTE: The very first time you run the project it may take a couple of minutes as it will also install all necessary R libraries. These are listed in the library.R file in the R_code directory*).
+(*NOTE:First time when you open the project, make sure to change the local directory to point to the location where the project gets copied*).
 
 
 [1] Please open and source the file RunStudy.R 
@@ -53,6 +50,6 @@ and source this file again. A new report, slides, and (if needed) web applicatio
 
 2. switch to the gh-pages branch (from the *Shell* (under the *Tools* menu), type *git checkout gh-pages*)
 
-3. Once in the gh-pages branch, you can copy the html files from the master branch by typing in the shell file the command *git checkout master doc/SP500_Report.html* and *git checkout master doc/SP500_Slides.html*. Your report and slides are now available online through gh-pages.
+3. Once in the gh-pages branch, you can copy the html files from the master branch by typing in the shell file the command *git checkout master doc/Report.html* and *git checkout master doc/Slides.html*. Your report and slides are now available online through gh-pages.
 
 4. You should now go back to the master branch (in the *Shell* type *git checkout master*) and delete the 2 html files from the doc directory (before pushing any new material back on your master branch on github).
