@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>(Big) Data Analytics for Business</title>
+  <meta charset="utf-8">
+  <meta name="description" content="(Big) Data Analytics for Business">
+  <meta name="author" content="T. Evgeniou and J. Niessing">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>(Big) Data Analytics for Business</h1>
+    <h2>Segmentation in the Boating Industry</h2>
+    <p>T. Evgeniou and J. Niessing<br/>INSEAD</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Every factor analysis has three basic decision points</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Decide the number of factors</p>
+
+<p>Choose an extraction method</p>
+
+<p>Choose a rotation method</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Correlation matrix of the 29 attitudes as a pre-step</h2>
+  </hgroup>
+  <article data-timings="">
+    <style>
+.wrapper{
+            
+            height: 400px;
+            width: 970px;
+            overflow-x: scroll;
+            overflow-y: scroll;
+          }
+</style>
+
+<div class="wrapper">
+<table border="1" class="data table table-bordered table-condensed">
+  <thead class="thead" style="font-size:10px;">
+    <tr>
+      <th style="position:fixed;"></th>
+      <th>Group Class code</th>
+      <th>Class code</th>
+      <th>January</th>
+      <th>February</th>
+      <th>March</th>
+      <th>April</th>
+      <th>May</th>
+      <th>June</th>
+      <th>July</th>
+      <th>August</th>
+      <th>September</th>
+      <th>October</th>
+      <th>November</th>
+      <th>December</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center" style="font-size:10px;">Group Class code</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(0,255,0)">0.999999</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.02522642</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.03993783</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.04259129</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.04102817</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.02604243</td>
+      <td align="right" style="background-color: rgb(248,255,248)">0.02929534</td>
+      <td align="right" style="background-color: rgb(255,252,252)">-0.01485272</td>
+      <td align="right" style="background-color: rgb(251,255,251)">0.01587264</td>
+      <td align="right" style="background-color: rgb(252,255,252)">0.01439495</td>
+      <td align="right" style="background-color: rgb(255,255,255)">-0.001535986</td>
+      <td align="right" style="background-color: rgb(255,255,255)">0.001067986</td>
+      <td align="right" style="background-color: rgb(253,255,253)">0.01001127</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">Class code</td>
+      <td align="right" style="background-color: rgb(0,255,0)">0.999999</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.0252644</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.03993403</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.04262432</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.0410317</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.02602916</td>
+      <td align="right" style="background-color: rgb(248,255,248)">0.02930517</td>
+      <td align="right" style="background-color: rgb(255,252,252)">-0.0148439</td>
+      <td align="right" style="background-color: rgb(251,255,251)">0.01583867</td>
+      <td align="right" style="background-color: rgb(252,255,252)">0.0143583</td>
+      <td align="right" style="background-color: rgb(255,255,255)">-0.001523761</td>
+      <td align="right" style="background-color: rgb(255,255,255)">0.001047293</td>
+      <td align="right" style="background-color: rgb(253,255,253)">0.009988943</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">January</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.02522642</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.0252644</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4869174</td>
+      <td align="right" style="background-color: rgb(138,255,138)">0.460281</td>
+      <td align="right" style="background-color: rgb(155,255,155)">0.3937697</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3783158</td>
+      <td align="right" style="background-color: rgb(171,255,171)">0.3287194</td>
+      <td align="right" style="background-color: rgb(179,255,179)">0.3000461</td>
+      <td align="right" style="background-color: rgb(173,255,173)">0.3234261</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.3105517</td>
+      <td align="right" style="background-color: rgb(170,255,170)">0.334724</td>
+      <td align="right" style="background-color: rgb(180,255,180)">0.2945598</td>
+      <td align="right" style="background-color: rgb(175,255,175)">0.3141265</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">February</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.03993783</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.03993403</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4869174</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(109,255,109)">0.5738064</td>
+      <td align="right" style="background-color: rgb(137,255,137)">0.4648214</td>
+      <td align="right" style="background-color: rgb(156,255,156)">0.3897439</td>
+      <td align="right" style="background-color: rgb(145,255,145)">0.4301341</td>
+      <td align="right" style="background-color: rgb(160,255,160)">0.373603</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3652487</td>
+      <td align="right" style="background-color: rgb(152,255,152)">0.4023841</td>
+      <td align="right" style="background-color: rgb(169,255,169)">0.3369853</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3645192</td>
+      <td align="right" style="background-color: rgb(178,255,178)">0.3012173</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">March</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.04259129</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.04262432</td>
+      <td align="right" style="background-color: rgb(138,255,138)">0.460281</td>
+      <td align="right" style="background-color: rgb(109,255,109)">0.5738064</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(103,255,103)">0.5943504</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4846684</td>
+      <td align="right" style="background-color: rgb(144,255,144)">0.437397</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3512398</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3480329</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3781614</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3654792</td>
+      <td align="right" style="background-color: rgb(173,255,173)">0.320768</td>
+      <td align="right" style="background-color: rgb(181,255,181)">0.291441</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">April</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.04102817</td>
+      <td align="right" style="background-color: rgb(245,255,245)">0.0410317</td>
+      <td align="right" style="background-color: rgb(155,255,155)">0.3937697</td>
+      <td align="right" style="background-color: rgb(137,255,137)">0.4648214</td>
+      <td align="right" style="background-color: rgb(103,255,103)">0.5943504</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(125,255,125)">0.5101888</td>
+      <td align="right" style="background-color: rgb(144,255,144)">0.4371569</td>
+      <td align="right" style="background-color: rgb(160,255,160)">0.3747499</td>
+      <td align="right" style="background-color: rgb(163,255,163)">0.3601312</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.4190759</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3654554</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3514112</td>
+      <td align="right" style="background-color: rgb(186,255,186)">0.2705581</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">May</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.02604243</td>
+      <td align="right" style="background-color: rgb(249,255,249)">0.02602916</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3783158</td>
+      <td align="right" style="background-color: rgb(156,255,156)">0.3897439</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4846684</td>
+      <td align="right" style="background-color: rgb(125,255,125)">0.5101888</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(118,255,118)">0.5352011</td>
+      <td align="right" style="background-color: rgb(138,255,138)">0.4598296</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.4191832</td>
+      <td align="right" style="background-color: rgb(153,255,153)">0.4011714</td>
+      <td align="right" style="background-color: rgb(149,255,149)">0.4167256</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.318076</td>
+      <td align="right" style="background-color: rgb(179,255,179)">0.2978512</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">June</td>
+      <td align="right" style="background-color: rgb(248,255,248)">0.02929534</td>
+      <td align="right" style="background-color: rgb(248,255,248)">0.02930517</td>
+      <td align="right" style="background-color: rgb(171,255,171)">0.3287194</td>
+      <td align="right" style="background-color: rgb(145,255,145)">0.4301341</td>
+      <td align="right" style="background-color: rgb(144,255,144)">0.437397</td>
+      <td align="right" style="background-color: rgb(144,255,144)">0.4371569</td>
+      <td align="right" style="background-color: rgb(118,255,118)">0.5352011</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(121,255,121)">0.5262304</td>
+      <td align="right" style="background-color: rgb(142,255,142)">0.4434944</td>
+      <td align="right" style="background-color: rgb(133,255,133)">0.4768286</td>
+      <td align="right" style="background-color: rgb(150,255,150)">0.4122745</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3758387</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.3178597</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">July</td>
+      <td align="right" style="background-color: rgb(255,252,252)">-0.01485272</td>
+      <td align="right" style="background-color: rgb(255,252,252)">-0.0148439</td>
+      <td align="right" style="background-color: rgb(179,255,179)">0.3000461</td>
+      <td align="right" style="background-color: rgb(160,255,160)">0.373603</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3512398</td>
+      <td align="right" style="background-color: rgb(160,255,160)">0.3747499</td>
+      <td align="right" style="background-color: rgb(138,255,138)">0.4598296</td>
+      <td align="right" style="background-color: rgb(121,255,121)">0.5262304</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(123,255,123)">0.5178766</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4875127</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.4390247</td>
+      <td align="right" style="background-color: rgb(154,255,154)">0.3953433</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.319967</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">August</td>
+      <td align="right" style="background-color: rgb(251,255,251)">0.01587264</td>
+      <td align="right" style="background-color: rgb(251,255,251)">0.01583867</td>
+      <td align="right" style="background-color: rgb(173,255,173)">0.3234261</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3652487</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3480329</td>
+      <td align="right" style="background-color: rgb(163,255,163)">0.3601312</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.4191832</td>
+      <td align="right" style="background-color: rgb(142,255,142)">0.4434944</td>
+      <td align="right" style="background-color: rgb(123,255,123)">0.5178766</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(107,255,107)">0.5818875</td>
+      <td align="right" style="background-color: rgb(119,255,119)">0.5350007</td>
+      <td align="right" style="background-color: rgb(142,255,142)">0.4438702</td>
+      <td align="right" style="background-color: rgb(153,255,153)">0.4008102</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">September</td>
+      <td align="right" style="background-color: rgb(252,255,252)">0.01439495</td>
+      <td align="right" style="background-color: rgb(252,255,252)">0.0143583</td>
+      <td align="right" style="background-color: rgb(176,255,176)">0.3105517</td>
+      <td align="right" style="background-color: rgb(152,255,152)">0.4023841</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3781614</td>
+      <td align="right" style="background-color: rgb(148,255,148)">0.4190759</td>
+      <td align="right" style="background-color: rgb(153,255,153)">0.4011714</td>
+      <td align="right" style="background-color: rgb(133,255,133)">0.4768286</td>
+      <td align="right" style="background-color: rgb(131,255,131)">0.4875127</td>
+      <td align="right" style="background-color: rgb(107,255,107)">0.5818875</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(118,255,118)">0.5385675</td>
+      <td align="right" style="background-color: rgb(124,255,124)">0.51261</td>
+      <td align="right" style="background-color: rgb(150,255,150)">0.413333</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">October</td>
+      <td align="right" style="background-color: rgb(255,255,255)">-0.001535986</td>
+      <td align="right" style="background-color: rgb(255,255,255)">-0.001523761</td>
+      <td align="right" style="background-color: rgb(170,255,170)">0.334724</td>
+      <td align="right" style="background-color: rgb(169,255,169)">0.3369853</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3654792</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3654554</td>
+      <td align="right" style="background-color: rgb(149,255,149)">0.4167256</td>
+      <td align="right" style="background-color: rgb(150,255,150)">0.4122745</td>
+      <td align="right" style="background-color: rgb(143,255,143)">0.4390247</td>
+      <td align="right" style="background-color: rgb(119,255,119)">0.5350007</td>
+      <td align="right" style="background-color: rgb(118,255,118)">0.5385675</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(133,255,133)">0.4803065</td>
+      <td align="right" style="background-color: rgb(135,255,135)">0.4691081</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">November</td>
+      <td align="right" style="background-color: rgb(255,255,255)">0.001067986</td>
+      <td align="right" style="background-color: rgb(255,255,255)">0.001047293</td>
+      <td align="right" style="background-color: rgb(180,255,180)">0.2945598</td>
+      <td align="right" style="background-color: rgb(162,255,162)">0.3645192</td>
+      <td align="right" style="background-color: rgb(173,255,173)">0.320768</td>
+      <td align="right" style="background-color: rgb(166,255,166)">0.3514112</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.318076</td>
+      <td align="right" style="background-color: rgb(159,255,159)">0.3758387</td>
+      <td align="right" style="background-color: rgb(154,255,154)">0.3953433</td>
+      <td align="right" style="background-color: rgb(142,255,142)">0.4438702</td>
+      <td align="right" style="background-color: rgb(124,255,124)">0.51261</td>
+      <td align="right" style="background-color: rgb(133,255,133)">0.4803065</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+      <td align="right" style="background-color: rgb(132,255,132)">0.4834691</td>
+    </tr>
+    <tr>
+      <td align="center" style="font-size:10px;">December</td>
+      <td align="right" style="background-color: rgb(253,255,253)">0.01001127</td>
+      <td align="right" style="background-color: rgb(253,255,253)">0.009988943</td>
+      <td align="right" style="background-color: rgb(175,255,175)">0.3141265</td>
+      <td align="right" style="background-color: rgb(178,255,178)">0.3012173</td>
+      <td align="right" style="background-color: rgb(181,255,181)">0.291441</td>
+      <td align="right" style="background-color: rgb(186,255,186)">0.2705581</td>
+      <td align="right" style="background-color: rgb(179,255,179)">0.2978512</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.3178597</td>
+      <td align="right" style="background-color: rgb(174,255,174)">0.319967</td>
+      <td align="right" style="background-color: rgb(153,255,153)">0.4008102</td>
+      <td align="right" style="background-color: rgb(150,255,150)">0.413333</td>
+      <td align="right" style="background-color: rgb(135,255,135)">0.4691081</td>
+      <td align="right" style="background-color: rgb(132,255,132)">0.4834691</td>
+      <td align="right" style="background-color: rgb(0,255,0)">1.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>** = correlation is significant at 1% level; * = correlation is significant at 5% level</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Number of Factors</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>There are three commen ways to select the number of factors:</p>
+
+<ol>
+<li><p>All factors with eigenvalue larger than 1</p></li>
+<li><p>Based on the cumulative variance we would like to explain (e.g. at least 50% for example).</p></li>
+<li><p>Pick the number of factrors corresponding to the &quot;elbow&quot; of the scree plot</p></li>
+</ol>
+
+<p>The first two approaches to select the number of factors/derived variables are based on statistical criteria and can be seen in the following table: </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Eigenvalues and explained variance</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Thu Feb 19 00:46:31 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableIDf0b34d6fb1f () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "Component No:1",
+5.522769733,
+39.44835524,
+39.44835524 
+],
+[
+ "Component No:2",
+2.005467495,
+14.32476782,
+53.77312306 
+],
+[
+ "Component No:3",
+1.21505256,
+8.678946854,
+62.45206991 
+],
+[
+ "Component No:4",
+0.8754397984,
+6.253141417,
+68.70521133 
+],
+[
+ "Component No:5",
+0.6348568636,
+4.534691883,
+73.23990321 
+],
+[
+ "Component No:6",
+0.6132728761,
+4.380520543,
+77.62042376 
+],
+[
+ "Component No:7",
+0.5743161277,
+4.102258055,
+81.72268181 
+],
+[
+ "Component No:8",
+0.488717154,
+3.490836814,
+85.21351862 
+],
+[
+ "Component No:9",
+0.4647385884,
+3.319561346,
+88.53307997 
+],
+[
+ "Component No:10",
+0.44471302,
+3.176521571,
+91.70960154 
+],
+[
+ "Component No:11",
+0.4210150246,
+3.007250176,
+94.71685172 
+],
+[
+ "Component No:12",
+0.3825564903,
+2.732546359,
+97.44939808 
+],
+[
+ "Component No:13",
+0.3570832822,
+2.550594873,
+99.99999295 
+],
+[
+ "Component No:14",
+0.0000009871281945,
+0.000007050915675,
+100 
+] 
+];
+data.addColumn('string','Components');
+data.addColumn('number','Eigenvalue');
+data.addColumn('number','Percentage_of_explained_variance');
+data.addColumn('number','Cumulative_percentage_of_explained_variance');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableIDf0b34d6fb1f() {
+var data = gvisDataTableIDf0b34d6fb1f();
+var options = {};
+options["allowHtml"] = true;
+options["width"] =    970;
+options["height"] =    400;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+  var dataFormat1 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat1.format(data, 1);
+  var dataFormat2 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat2.format(data, 2);
+  var dataFormat3 = new google.visualization.NumberFormat({pattern:"#.##"});
+  dataFormat3.format(data, 3);
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableIDf0b34d6fb1f')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableIDf0b34d6fb1f);
+})();
+function displayChartTableIDf0b34d6fb1f() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableIDf0b34d6fb1f"></script>
+ 
+
+<!-- divChart -->
+
+<div id="TableIDf0b34d6fb1f" 
+  style="width: 970; height: 400;">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>A common basic visualization when running the factor analysis is the Screeplot</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The screeplot depicts the eigenvalues of the factors and thus allows gaining another quick overview on how many factors should be retained:
+<center></p>
+
+<!-- LineChart generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Thu Feb 19 00:46:31 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataLineChartIDf0b5624bd53 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "1",
+5.522769733,
+1 
+],
+[
+ "2",
+2.005467495,
+1 
+],
+[
+ "3",
+1.21505256,
+1 
+],
+[
+ "4",
+0.8754397984,
+1 
+],
+[
+ "5",
+0.6348568636,
+1 
+],
+[
+ "6",
+0.6132728761,
+1 
+],
+[
+ "7",
+0.5743161277,
+1 
+],
+[
+ "8",
+0.488717154,
+1 
+],
+[
+ "9",
+0.4647385884,
+1 
+],
+[
+ "10",
+0.44471302,
+1 
+],
+[
+ "11",
+0.4210150246,
+1 
+],
+[
+ "12",
+0.3825564903,
+1 
+],
+[
+ "13",
+0.3570832822,
+1 
+],
+[
+ "14",
+0.0000009871281949,
+1 
+] 
+];
+data.addColumn('string','components');
+data.addColumn('number','eigenvalues');
+data.addColumn('number','abline');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartLineChartIDf0b5624bd53() {
+var data = gvisDataLineChartIDf0b5624bd53();
+var options = {};
+options["allowHtml"] = true;
+options["title"] = "Scree plot";
+options["legend"] = "right";
+options["width"] =    600;
+options["height"] =    400;
+options["hAxis"] = {title:'Number of Components', titleTextStyle:{color:'black'}};
+options["vAxes"] = [{title:'Eigenvalues'}];
+options["series"] = [{color:'green',pointSize:12, targetAxisIndex: 0}];
+
+    var chart = new google.visualization.LineChart(
+    document.getElementById('LineChartIDf0b5624bd53')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartLineChartIDf0b5624bd53);
+})();
+function displayChartLineChartIDf0b5624bd53() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartIDf0b5624bd53"></script>
+ 
+
+<!-- divChart -->
+
+<div id="LineChartIDf0b5624bd53" 
+  style="width: 600; height: 400;">
+</div>
+
+<p></center></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Extraction Method</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The extraction method will produce factor loadings for every item on every extracted factor. </p>
+
+<p>There at least five extraction methods. The evidence supports the use of one of these two:</p>
+
+<ul>
+<li>principal axis factoring</li>
+<li>maximum likelihood approaches (i.e. canonical factoring)</li>
+</ul>
+
+<p>The extraction and rotation steps are usually specificed in the same command in R (next subsection shows such commands).</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Rotation Method</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Once an initial solution is obtained, the loadings are rotated. Rotation is a way of maximizing high loadings and minimizing low loadings so that the simplest possible structure is achieved.</p>
+
+<p>There are two types of rotation:</p>
+
+<ul>
+<li><p>no rotation</p></li>
+<li><p>varimax, which is one of the key rotation methods used</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Based on the critrion &#39;explained variance (65%)&#39; we have selected 10 factors that could now be used for the segmentation</h2>
+  </hgroup>
+  <article data-timings="">
+    <!-- Table generated in R 3.1.2 by googleVis 0.5.8 package -->
+
+<!-- Thu Feb 19 00:46:31 2015 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataTableIDf0b6bc46a33 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "Group Class code",
+null,
+1,
+null 
+],
+[
+ "Class code",
+null,
+1,
+null 
+],
+[
+ "January",
+0.59,
+null,
+null 
+],
+[
+ "February",
+0.67,
+null,
+null 
+],
+[
+ "March",
+0.69,
+null,
+null 
+],
+[
+ "April",
+0.68,
+null,
+null 
+],
+[
+ "May",
+0.69,
+null,
+null 
+],
+[
+ "June",
+0.71,
+null,
+null 
+],
+[
+ "July",
+0.69,
+null,
+null 
+],
+[
+ "August",
+0.71,
+null,
+null 
+],
+[
+ "September",
+0.74,
+null,
+null 
+],
+[
+ "October",
+0.7,
+null,
+null 
+],
+[
+ "November",
+0.65,
+null,
+null 
+],
+[
+ "December",
+0.59,
+null,
+null 
+] 
+];
+data.addColumn('string','Attitudes');
+data.addColumn('number','Component 1');
+data.addColumn('number','Component 2');
+data.addColumn('number','Component 3');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartTableIDf0b6bc46a33() {
+var data = gvisDataTableIDf0b6bc46a33();
+var options = {};
+options["allowHtml"] = true;
+options["showRowNumber"] = true;
+options["width"] =    970;
+options["height"] =    300;
+options["allowHTML"] = true;
+options["page"] = "disable";
+
+    var chart = new google.visualization.Table(
+    document.getElementById('TableIDf0b6bc46a33')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "table";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartTableIDf0b6bc46a33);
+})();
+function displayChartTableIDf0b6bc46a33() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartTableIDf0b6bc46a33"></script>
+ 
+
+<!-- divChart -->
+
+<div id="TableIDf0b6bc46a33" 
+  style="width: 970; height: 300;">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Instead of the derived constructs we could also use &#39;a&#39; single statement from each factor as a proxy for the factor</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Usually researchers pick the attitudes with the highest factor loading</p>
+
+<style>
+.wrapper{
+            
+            
+            width: 100%;
+           
+            overflow-x: scroll;
+             
+          }
+.wrapper1{
+            
+           height:300px;
+             overflow-y: scroll;
+          }
+</style>
+
+<div class="wrapper wrapper1">
+NULL
+
+```
+Error in paste("Raw attributes with highest loading per factor:", data_name, : object 'data_name' not found
+```
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Every factor analysis has three basic decision points'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Correlation matrix of the 29 attitudes as a pre-step'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Number of Factors'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Eigenvalues and explained variance'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='A common basic visualization when running the factor analysis is the Screeplot'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Extraction Method'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Rotation Method'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Based on the critrion &#39;explained variance (65%)&#39; we have selected 10 factors that could now be used for the segmentation'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Instead of the derived constructs we could also use &#39;a&#39; single statement from each factor as a proxy for the factor'>
+         9
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

@@ -4,7 +4,7 @@
 #  Dual licensed under the MIT or GPL Version 2 licenses.
 
 if (!exists("local_directory")) {  
-  local_directory <- "~/Data_Analytics_Case_MarketSegmentation_LuxuryGoods"
+  local_directory <- "~/BigDataRetailProject"
   source(paste(local_directory,"R/library.R",sep="/"))
   source(paste(local_directory,"R/heatmapOutput.R",sep="/"))
 } 
