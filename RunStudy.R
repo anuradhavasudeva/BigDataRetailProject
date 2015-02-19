@@ -29,11 +29,11 @@ slides_file = "Slides_s45"
 
 # Please ENTER then original raw attributes to use. 
 # Please use numbers, not column names! e.g. c(1:5, 7, 8) uses columns 1,2,3,4,5,7,8
-factor_attributes_used= c(1:29)
+factor_attributes_used= c(1:15)
 
 # Please ENTER the selection criterions for the factors to use. 
 # Choices: "eigenvalue", "variance", "manual"
-factor_selectionciterion = "eigenvalue"
+factor_selectionciterion = "manual"
 
 # Please ENTER the desired minumum variance explained 
 # (ONLY USED in case "variance" is the factor selection criterion used). 
@@ -41,7 +41,7 @@ minimum_variance_explained = 65  # between 1 and 100
 
 # Please ENTER the number of factors to use 
 # (ONLY USED in case "manual" is the factor selection criterion used).
-manual_numb_factors_used = 2
+manual_numb_factors_used = 6
 
 # Please ENTER the rotation eventually used (e.g. "none", "varimax", "quatimax", "promax", "oblimin", "simplimax", and "cluster" - see help(principal)). Defauls is "varimax"
 rotation_used="varimax"
@@ -66,19 +66,6 @@ max_data_report = 50 # can also chance in server.R
 # (DEFAULT is 0). 
 start_local_webapp <- 0
 # NOTE: You need to make sure the shiny library is installing (see below)
-
-################################################
-# Now run everything
-
-# this loads the selected data: DO NOT EDIT THIS LINE
-ProjectData <- read.csv(paste(paste(local_directory, "data", sep="/"), paste(datafile_name,"csv", sep="."), sep = "/"), sep=";", dec=",") # this contains only the matrix ProjectData
-ProjectData=data.matrix(ProjectData) 
-
-if (datafile_name == "StoreSales")
-  colnames(ProjectData)<-gsub("\\."," ",colnames(ProjectData))
-
-
-
 
 # Please ENTER then original raw attributes to use for the segmentation (the "segmentation attributes")
 # Please use numbers, not column names! e.g. c(1:5, 7, 8) uses columns 1,2,3,4,5,7,8

@@ -24,7 +24,7 @@ In FMCG retail Industry, one of the key challenge is to **forecast sales across 
 
 Major FMCG retailers usually sell around **50,000 skus (Stock Keeping UnitS)** and keep around **45 days average stock** across distribution centers and stores (high rotation items have few days stock while some other items actually gets more than 3 months of stock). As a matter of fact, improper forecast will have important negative financial consequences or even damage the brand image. 
 
-On the one hand, **excessive order will generate overstock** in stores generating excess inventory and increasing working capital requirement. Later on, excess inventory would require to operate some **adhoc promotion** to deplete stock - shrinking margins which are already low in retail Business - while sending **"wrong messages”** to customers: promotions primarily aim to generate desire at customer’s level to buy a product with a precise and coherent long term strategy. It is not supposed to compensate for a poor inventory management and regulate the stock level.
+On the one hand, **excessive order will generate overstock** in stores generating excess inventory and increasing working capital requirement. Later on, excess inventory would require to operate some **adhoc promotion** to deplete stock - shrinking margins which are already low in retail Business - while sending **"wrong messages???** to customers: promotions primarily aim to generate desire at customer???s level to buy a product with a precise and coherent long term strategy. It is not supposed to compensate for a poor inventory management and regulate the stock level.
 On the other hand, out of stock products will have serious consequences on the Business: with empty shelves, stores will not only lose sales opportunity but also may **lose loyal customers**, which mean on the long run market share. After all, the only thing that is more annoying than shopping in an hypermarket is shopping in an hypermarket and find empty shelves. 
 
 Moreover, sales forecast has always been a **source of internal conflicts** in every retail organization: Buyers and merchandisers are usually incentivized on sales target and tend to plan on **over-optimistic** or even **excessive order**. On the other hand, Supply Chain and Finance, respectively worrying about excess of physical inventory or increase in working capital, tend to be **too conservative** and put pressure to lower order forecast. Ordering and replenishment team - usually coordinating between both teams - need to deal with this situation and has to manage the trade off between keeping low inventory while securing sales for the sake of the Business.
@@ -33,7 +33,7 @@ Our Approach Part #1
 ---------------------------------------------------------------
 We used actual data (modified for confidentiality reason) showing consolidated retail stores chain sales per product category per month.
 
-The raw data basically shows (1) 12 columns for monthly sales [january to december] and (2) 565 categories of class of products (Rice, Oil, coffee, Beer, TV, paper, etc…)
+The raw data basically shows (1) 12 columns for monthly sales [january to december] and (2) 565 categories of class of products (Rice, Oil, coffee, Beer, TV, paper, etc???)
 
 
 ```{r echo=FALSE, message=FALSE, prompt=FALSE, results='asis'}
@@ -132,7 +132,7 @@ Let's now see what factor analysis suggests as factors.
 
 #### Step 4. Develop a scree plot and decide on the number of factors to be derived
 
-We decided to apply the segmentation methodology to combine some months and highlight some 'season trend’ across the year. Obviously there are 12 months in the year but some months show similar sales from one to another. 
+We decided to apply the segmentation methodology to combine some months and highlight some 'season trend' across the year. Obviously there are 12 months in the year but some months show similar sales from one to another. 
 
 ```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
 UnRotated_Results<-principal(ProjectDataFactor, nfactors=ncol(ProjectDataFactor), rotate="none",score=TRUE)
@@ -160,7 +160,7 @@ colnames(Variance_Explained_Table)<-c("Components", "Eigenvalue", "Percentage_of
 m<-gvisTable(Variance_Explained_Table,options=list(width=1200, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'),formats=list(Eigenvalue="#.##",Percentage_of_explained_variance="#.##",Cumulative_percentage_of_explained_variance="#.##"))
 print(m,'chart')
 ```
-<br> <br>
+
 
 One can also plot the eigenvalues of the generated factors in decreasing order: this plot is called the **scree plot**. For our data this plot looks as follows:
 
@@ -211,7 +211,7 @@ colnames (dfnew)<-change
 m1<-gvisTable(dfnew,options=list(showRowNumber=TRUE,width=1220, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'))
 print(m1,'chart')
 ```
-<br> <br>
+
 
 To better visualize and interpret the factors we "supress" loadings with small values, e.g. with absolute values smaller than `r MIN_VALUE`. In this case our factors look as follows after suppressing the small numbers:
 
@@ -231,9 +231,11 @@ colnames (dfnew)<-change
 m1<-gvisTable(dfnew,options=list(showRowNumber=TRUE,width=1220, height=min(400,27*(nrow(show_data)+1)),allowHTML=TRUE,page='disable'))
 print(m1,'chart')
 ```
-<br> <br>
 
-**By applying segmentation process, we achieved to ‘group some months’  and reduce timeline to 4 segment: Peak season (december), high season (october), normal season (april) and low season (july).**
+
+**By applying segmentation process, we achieved to 'group some months'  and reduce timeline to 4 segment: **
+
+**Peak season (december), high season (october), normal season (april) and low season (july).**
 
 
 #### Step 6. Save factor scores for subsequent analyses
@@ -299,8 +301,6 @@ ProjectData = data.matrix(ProjectData)
 ```
 
 <br>
-
-<br> <br>
 
 
 Our Approach Part #2
@@ -402,7 +402,7 @@ rect.hclust(Hierarchical_Cluster, k=numb_clusters_used, border="red")
 ```
 
 
-Hence, we applied the ‘clusterization' process in order to group product categories by clusters based on sales correlation across the 4 periods (4 segments mentioned above).  We gets 8 clusters with different trends mostly explained by top items in each cluster: 
+Hence, we applied the 'clusterization' process in order to group product categories by clusters based on sales correlation across the 4 periods (4 segments mentioned above).  We gets 8 clusters with different trends mostly explained by top items in each cluster: 
 
 
 ```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE, fig.align='center', results='asis'}
@@ -444,26 +444,18 @@ print(m1,'chart')
 <br> <br>
 
 
-<br> <br>
-
-
 #### Step 7. Profile and interpret the clusters 
 
-**Cluster 1**: Hot sales products  (rice, palm oil, coffee) with sales highly dependent on promotion (year end)
-**Cluster 2&4**: Mainly TV and DVD player, sales are relatively stable sales across the year.
-**Cluster 3**: High sales in february (chinese new year), april and may (peak season) but low in december. Mostly sugar which is a strictly regulated commodity with quota in Thailand. Quota sometimes allocated/depleted before december.
-**Cluster 5**: Key items in this cluster is Beer and Fan. Peak sales in April&may during warm season. High sales for beer in year due to massive year-end promotion.
-**Cluster 6**: Sales with moderate volatility, mostly IT hardware except in april: back to school season, students buy uniform and renew laptop and printer.
-**Cluster 7**: Sales relatively stable across the year except massive peak of sales in Nov & Dec. Top 10 of the products is Alcohol & White goods (washing machine and refrigerator) that correspond to Samsung and other Appliance supplier promotion at year end to reach yearly sales objective. 
+**Cluster 1**: Hot sales products  (rice, palm oil, coffee) with sales highly dependent on promotion (year end)<br>
+**Cluster 2&4**: Mainly TV and DVD player, sales are relatively stable sales across the year.<br>
+**Cluster 3**: High sales in february (chinese new year), april and may (peak season) but low in december. Mostly sugar which is a strictly regulated commodity with quota in Thailand. Quota sometimes allocated/depleted before december.<br>
+**Cluster 5**: Key items in this cluster is Beer and Fan. Peak sales in April&may during warm season. High sales for beer in year due to massive year-end promotion.<br>
+**Cluster 6**: Sales with moderate volatility, mostly IT hardware except in april: back to school season, students buy uniform and renew laptop and printer.<br>
+**Cluster 7**: Sales relatively stable across the year except massive peak of sales in Nov & Dec. Top 10 of the products is Alcohol & White goods (washing machine and refrigerator) that correspond to Samsung and other Appliance supplier promotion at year end to reach yearly sales objective. <br>
 **Cluster 8**: Sales with high volatility with peak of sales in Nov & Dec. Top 10 of the products is Oral Care/ Body Hygiene that correspond to massive P&G/unilever promotion to close year sales objective. We also find Thai Gift basket which is a product only sold in December as per Thai tradition.
 
 The average values of our data for the total population as well as within each customer segment are:
 
-
-```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
-cluster_memberships_kmeans <- kmeans_clusters$cluster 
-cluster_ids_kmeans <- unique(cluster_memberships_kmeans)
-```
 
 ```{r echo=FALSE, comment=NA, warning=FALSE, message=FALSE,results='asis'}
 cluster_memberships <- cluster_memberships_hclust
@@ -521,15 +513,9 @@ cat(renderHeatmapX(cluster_profile_ratios, border=1, center = 1, minvalue = heat
 ```
 
 
-#### Step 8. Assess the robustness of our clusters
-
-A very important step. 
-
-
 Intepretation, Decisions and Conclusion
 ----------------------------------------------------------------
 
 As a conclusion, our model **simplified the timeline** by introducing four seasons in the year (instead of 12 months) and provided a **simple sales forecast** - relative to a sales baseline - for each cluster of products, each cluster grouping many different product categories.
 
 With additional further developments to refine these results, this model may have **multiple applications**. For instance, it may help to better understand existing sales trend for existing assortment and better manage sales plan, reduce leftover while strictly preventing out of stock at store level. It may also be useful when introducing new products in the assortment. Thus, one way to proceed would be to anticipate sales variation across the four seasons by identifying the cluster of products where the new product belong and apply the trend to a sales baseline.
-
